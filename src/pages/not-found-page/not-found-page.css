@@ -1,0 +1,30 @@
+.not-found {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.not-found__text {
+  font-size: 28px;
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.not-found__description {
+  margin-bottom: 40px;
+}
+
+.not-found__link {
+  display: inline-block;
+  padding: 24px 40px;
+  background-color: transparent;
+  color: #c9b37e;
+  border: 1px solid rgba(217, 205, 141, .41);
+  border-radius: 8px;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.not-found__link:hover,
+.not-found__link:focus {
+  border-color: rgba(217, 205, 141, .7);
+}
