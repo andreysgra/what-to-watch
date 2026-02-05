@@ -124,7 +124,7 @@ function MainPage({films}: MainPageProps) {
             </li>
           </ul>
           <div className="catalog__films-list">
-            {films.map((film) => <FilmCard key={film.id} />)}
+            {films.map((film) => <FilmCard key={film.id} film={film} />)}
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">

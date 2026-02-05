@@ -11,3 +11,8 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH'
 }
+
+export enum RouteParam {
+  Id = ':id',
+  Status = ':status'
+}
