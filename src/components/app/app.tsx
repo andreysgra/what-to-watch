@@ -44,7 +44,7 @@ function App({films}: AppProps) {
               restrictedFor={AuthorizationStatus.NoAuth}
               redirectedTo={AppRoute.Login}
             >
-              <MyListPage />
+              <MyListPage films={films} />
             </PrivateRoute>
           }
         />
