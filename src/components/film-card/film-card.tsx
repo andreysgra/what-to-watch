@@ -21,14 +21,14 @@ function FilmCard({film, onMouseEnter, onMouseLeave}: FilmCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="small-film-card__image">
+      <Link className="small-film-card__image" to={link}>
         <img
           src={previewImage}
           alt={name}
           width={280}
           height={175}
         />
-      </div>
+      </Link>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={link}>
           {name}
