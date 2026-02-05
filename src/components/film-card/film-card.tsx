@@ -4,14 +4,23 @@ import {AppRoute, RouteParam} from '../../const';
 
 type FilmCardProps = {
   film: TFilm;
+  onMouseEnter: (id: string) => void;
+  onMouseLeave: () => void;
 }
 
-function FilmCard({film}: FilmCardProps) {
+function FilmCard({film, onMouseEnter, onMouseLeave}: FilmCardProps) {
   const {id, name, previewImage} = film;
   const link = AppRoute.Film.replace(RouteParam.Id, id);
 
+  const handleMouseEnter = () => onMouseEnter(id);
+  const handleMouseLeave = () => onMouseLeave();
+
   return (
-    <article className="small-film-card catalog__films-card">
+    <article
+      className="small-film-card catalog__films-card"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="small-film-card__image">
         <img
           src={previewImage}
