@@ -2,12 +2,13 @@ import {Fragment} from 'react';
 import FilmCard from '../../components/film-card/film-card';
 import PageFooter from '../../components/page-footer/page-footer';
 import Logo from '../../components/logo/logo';
+import {TFilms} from '../../types/film';
 
 type MainPageProps = {
-  filmsCount: number;
+  films: TFilms;
 }
 
-function MainPage({filmsCount}: MainPageProps) {
+function MainPage({films}: MainPageProps) {
   return (
     <Fragment>
       <section className="film-card">
@@ -123,7 +124,7 @@ function MainPage({filmsCount}: MainPageProps) {
             </li>
           </ul>
           <div className="catalog__films-list">
-            {Array.from({length: filmsCount}, () => <FilmCard key={crypto.randomUUID()} />)}
+            {films.map((film) => <FilmCard key={film.id} />)}
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">
