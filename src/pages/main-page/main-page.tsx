@@ -1,8 +1,8 @@
 import {Fragment} from 'react';
-import FilmCard from '../../components/film-card/film-card';
 import PageFooter from '../../components/page-footer/page-footer';
 import Logo from '../../components/logo/logo';
 import {TFilms} from '../../types/film';
+import FilmsList from '../../components/films-list/films-list';
 
 type MainPageProps = {
   films: TFilms;
@@ -123,9 +123,7 @@ function MainPage({films}: MainPageProps) {
               </a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            {films.map((film) => <FilmCard key={film.id} film={film} />)}
-          </div>
+          <FilmsList films={films} />
           <div className="catalog__more">
             <button className="catalog__button" type="button">
               Show more
