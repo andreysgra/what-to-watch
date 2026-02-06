@@ -22,7 +22,7 @@ function App({films}: AppProps) {
       <Routes>
         <Route
           index
-          element={<MainPage films={films} /> }
+          element={<MainPage films={films} authorizationStatus={authorizationStatus} /> }
         />
         <Route
           path={AppRoute.Login}
@@ -50,7 +50,7 @@ function App({films}: AppProps) {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage />}
+          element={<FilmPage authorizationStatus={authorizationStatus} />}
         />
         <Route
           path={AppRoute.AddReview}

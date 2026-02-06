@@ -3,14 +3,15 @@ import PageFooter from '../../components/page-footer/page-footer';
 import Logo from '../../components/logo/logo';
 import {TFilms} from '../../types/film';
 import FilmsList from '../../components/films-list/films-list';
-import {Link} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {AuthorizationStatus} from '../../const';
+import UserNavigation from '../../components/user-navigation/user-navigation';
 
 type MainPageProps = {
   films: TFilms;
+  authorizationStatus: AuthorizationStatus;
 }
 
-function MainPage({films}: MainPageProps) {
+function MainPage({films, authorizationStatus}: MainPageProps) {
   return (
     <Fragment>
       <section className="film-card">
@@ -23,16 +24,7 @@ function MainPage({films}: MainPageProps) {
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header film-card__head">
           <Logo />
-          <ul className="user-block">
-            <li className="user-block__item">
-              <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}}>
-                <img src="img/avatar.jpg" alt="User avatar" width={63} height={63} />
-              </Link>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <UserNavigation authorizationStatus={authorizationStatus} />
         </header>
         <div className="film-card__wrap">
           <div className="film-card__info">

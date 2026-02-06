@@ -1,8 +1,15 @@
 import {Fragment} from 'react';
 import Logo from '../../components/logo/logo';
 import PageFooter from '../../components/page-footer/page-footer';
+import {Link} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import UserNavigation from '../../components/user-navigation/user-navigation';
 
-function FilmPage() {
+type FilmPageProps = {
+  authorizationStatus: AuthorizationStatus;
+}
+
+function FilmPage({authorizationStatus}: FilmPageProps) {
   return (
     <Fragment>
       <section className="film-card film-card--full">
@@ -16,21 +23,7 @@ function FilmPage() {
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
             <Logo />
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img
-                    src="img/avatar.jpg"
-                    alt="User avatar"
-                    width={63}
-                    height={63}
-                  />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserNavigation authorizationStatus={authorizationStatus} />
           </header>
           <div className="film-card__wrap">
             <div className="film-card__desc">
@@ -53,9 +46,9 @@ function FilmPage() {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">
+                <Link className="btn film-card__button" to={AppRoute.AddReview}>
                   Add review
-                </a>
+                </Link>
               </div>
             </div>
           </div>
