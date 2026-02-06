@@ -16,3 +16,5 @@ export enum RouteParam {
   Id = ':id',
   Status = ':status'
 }
+
+export const STARS_COUNT = 10;
