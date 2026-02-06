@@ -8,21 +8,23 @@ import PlayerPage from '../../pages/player-page/player-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {TFilms} from '../../types/film';
+import {TFilmDetailed, TFilmPromo, TFilms} from '../../types/film';
 
 type AppProps = {
   films: TFilms;
+  filmPromo: TFilmPromo;
+  film: TFilmDetailed;
 }
 
 const authorizationStatus = AuthorizationStatus.NoAuth;
 
-function App({films}: AppProps) {
+function App({films, filmPromo, film}: AppProps) {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           index
-          element={<MainPage films={films} authorizationStatus={authorizationStatus} /> }
+          element={<MainPage films={films} filmPromo={filmPromo} authorizationStatus={authorizationStatus} /> }
         />
         <Route
           path={AppRoute.Login}
@@ -50,7 +52,7 @@ function App({films}: AppProps) {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage authorizationStatus={authorizationStatus} />}
+          element={<FilmPage film={film} authorizationStatus={authorizationStatus} />}
         />
         <Route
           path={AppRoute.AddReview}
