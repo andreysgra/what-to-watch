@@ -1,42 +1,56 @@
 import {Fragment} from 'react';
 import Logo from '../../components/logo/logo';
 import PageFooter from '../../components/page-footer/page-footer';
+import {Link} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus, RouteParam} from '../../const';
+import UserNavigation from '../../components/user-navigation/user-navigation';
+import MyListButton from '../../components/my-list-button/my-list-button';
+import {TFilmDetailed} from '../../types/film';
 
-function FilmPage() {
+type FilmPageProps = {
+  film: TFilmDetailed;
+  authorizationStatus: AuthorizationStatus;
+}
+
+function FilmPage({film, authorizationStatus}: FilmPageProps) {
+  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  const {
+    id,
+    name,
+    isFavorite,
+    genre,
+    posterImage,
+    backgroundImage,
+    backgroundColor,
+    scoresCount,
+    description,
+    director,
+    starring
+  } = film;
+
+  const link = AppRoute.AddReview.replace(RouteParam.Id, id);
+
   return (
     <Fragment>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src="img/bg-the-grand-budapest-hotel.jpg"
-              alt="The Grand Budapest Hotel"
+              src={backgroundImage}
+              alt={name}
             />
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
             <Logo />
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img
-                    src="img/avatar.jpg"
-                    alt="User avatar"
-                    width={63}
-                    height={63}
-                  />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <UserNavigation authorizationStatus={authorizationStatus} />
           </header>
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
+                <span className="film-card__genre">{genre}</span>
                 <span className="film-card__year">2014</span>
               </p>
               <div className="film-card__buttons">
@@ -46,16 +60,12 @@ function FilmPage() {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
-                    <use xlinkHref="#add" />
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-                <a href="add-review.html" className="btn film-card__button">
-                  Add review
-                </a>
+                <MyListButton isFavorite={isFavorite} />
+                {isAuthorized && (
+                  <Link className="btn film-card__button" to={link}>
+                    Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -64,8 +74,8 @@ function FilmPage() {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={posterImage}
+                alt={name}
                 width={218}
                 height={327}
               />
@@ -94,29 +104,17 @@ function FilmPage() {
                 <div className="film-rating__score">8,9</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__count">{scoresCount} ratings</span>
                 </p>
               </div>
               <div className="film-card__text">
-                <p>
-                  In the 1930s, the Grand Budapest Hotel is a popular European ski
-                  resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero,
-                  a junior lobby boy, becomes Gustave&apos;s friend and protege.
-                </p>
-                <p>
-                  Gustave prides himself on providing first-class service to the
-                  hotel&apos;s guests, including satisfying the sexual needs of the many
-                  elderly women who stay there. When one of Gustave&apos;s lovers dies
-                  mysteriously, Gustave finds himself the recipient of a priceless
-                  painting and the chief suspect in her murder.
-                </p>
+                <p>{description}</p>
                 <p className="film-card__director">
-                  <strong>Director: Wes Anderson</strong>
+                  <strong>Director: {director}</strong>
                 </p>
                 <p className="film-card__starring">
                   <strong>
-                    Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and
-                    other
+                    Starring: {starring.join(', ')}
                   </strong>
                 </p>
               </div>
