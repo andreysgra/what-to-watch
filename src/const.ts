@@ -18,3 +18,8 @@ export enum RouteParam {
 }
 
 export const STARS_COUNT = 10;
+
+export const CommentLength = {
+  Min: 50,
+  Max: 300
+} as const;
