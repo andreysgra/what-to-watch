@@ -23,3 +23,5 @@ export const CommentLength = {
   Min: 50,
   Max: 300
 } as const;
+
+export const DELAY_BEFORE_PLAY_VIDEO = 1000;
