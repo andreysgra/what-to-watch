@@ -42,3 +42,5 @@ export const CommentLength = {
 export const DELAY_BEFORE_PLAY_VIDEO = 1000;
 
 export const MAX_STARRING_COUNT = 4;
+
+export const REVIEW_COLUMNS_COUNT = 2;
