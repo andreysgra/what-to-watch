@@ -17,6 +17,21 @@ export enum RouteParam {
   Status = ':status'
 }
 
+export enum FilmRatingLevel {
+  Bad = 'Bad',
+  Normal = 'Normal',
+  Good = 'Good',
+  VeryGood = 'Very good',
+  Awesome = 'Awesome'
+}
+
+export const FilmRatingMinThreshold = {
+  [FilmRatingLevel.Normal]: 3,
+  [FilmRatingLevel.Good]: 5,
+  [FilmRatingLevel.VeryGood]: 8,
+  [FilmRatingLevel.Awesome]: 10
+} as const;
+
 export const STARS_COUNT = 10;
 
 export const CommentLength = {
@@ -25,3 +40,5 @@ export const CommentLength = {
 } as const;
 
 export const DELAY_BEFORE_PLAY_VIDEO = 1000;
+
+export const MAX_STARRING_COUNT = 4;
