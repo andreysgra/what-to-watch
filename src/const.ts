@@ -25,6 +25,12 @@ export enum FilmRatingLevel {
   Awesome = 'Awesome'
 }
 
+export enum FilmTabName {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews'
+}
+
 export const FilmRatingMinThreshold = {
   [FilmRatingLevel.Normal]: 3,
   [FilmRatingLevel.Good]: 5,
