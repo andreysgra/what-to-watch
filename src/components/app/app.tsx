@@ -54,7 +54,7 @@ function App({films, reviews, filmPromo, film}: AppProps) {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage film={film} reviews={reviews} authorizationStatus={authorizationStatus} />}
+          element={<FilmPage films={films} film={film} reviews={reviews} authorizationStatus={authorizationStatus} />}
         />
         <Route
           path={AppRoute.AddReview}

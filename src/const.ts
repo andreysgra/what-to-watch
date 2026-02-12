@@ -49,4 +49,8 @@ export const DELAY_BEFORE_PLAY_VIDEO = 1000;
 
 export const MAX_STARRING_COUNT = 4;
 
+export const MAX_SIMILAR_FILMS_COUNT = 4;
+
+export const FILMS_PER_LOAD = 8;
+
 export const REVIEW_COLUMNS_COUNT = 2;
