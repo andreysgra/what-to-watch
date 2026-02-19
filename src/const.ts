@@ -54,3 +54,5 @@ export const MAX_SIMILAR_FILMS_COUNT = 4;
 export const FILMS_PER_LOAD = 8;
 
 export const REVIEW_COLUMNS_COUNT = 2;
+
+export const ALL_GENRES = 'all';
