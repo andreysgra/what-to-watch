@@ -51,8 +51,10 @@ export const MAX_STARRING_COUNT = 4;
 
 export const MAX_SIMILAR_FILMS_COUNT = 4;
 
+export const MAX_GENRES_COUNT = 9;
+
 export const FILMS_PER_LOAD = 8;
 
 export const REVIEW_COLUMNS_COUNT = 2;
 
-export const ALL_GENRES = 'all';
+export const ALL_GENRES = 'All genres';
