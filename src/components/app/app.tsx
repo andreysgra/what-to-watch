@@ -26,7 +26,7 @@ function App({films, reviews, filmPromo, film}: AppProps) {
       <Routes>
         <Route
           index
-          element={<MainPage films={films} filmPromo={filmPromo} authorizationStatus={authorizationStatus} /> }
+          element={<MainPage filmPromo={filmPromo} authorizationStatus={authorizationStatus} /> }
         />
         <Route
           path={AppRoute.Login}

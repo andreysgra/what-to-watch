@@ -33,3 +33,15 @@ export const getFilmRating = (rating: number): string => {
 
 export const getFormattedDate = (date: string): string =>
   new Date(date).toLocaleDateString('en-US', {month: 'long', day: '2-digit', year: 'numeric', });
+
+export const groupBy = <K extends PropertyKey, T>(items: Iterable<T>, getKey: (item: T) => K) =>
+  Array.from(items).reduce(
+    (result, item) => {
+      const key = getKey(item);
+
+      (result[key] ??= []).push(item);
+
+      return result;
+    },
+    {} as Record<K, T[]>
+  );
