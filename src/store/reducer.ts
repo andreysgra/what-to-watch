@@ -1,5 +1,5 @@
 import {TFilms} from '../types/film';
-import {createReducer} from '@reduxjs/toolkit/src';
+import {createReducer} from '@reduxjs/toolkit';
 import {setFilms, setFilmsCount, setGenre} from './action';
 import {ALL_GENRES, FILMS_PER_LOAD} from '../const';
 

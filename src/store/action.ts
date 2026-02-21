@@ -1,4 +1,4 @@
-import {createAction} from '@reduxjs/toolkit/src';
+import {createAction} from '@reduxjs/toolkit';
 import {TFilms} from '../types/film';
 
 export const setGenre = createAction<string>('genre/set');
