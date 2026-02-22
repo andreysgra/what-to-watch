@@ -1,7 +1,8 @@
 import {TFilms} from '../types/film';
 import {createReducer} from '@reduxjs/toolkit';
-import {setFilms, setFilmsCount, setGenre} from './action';
+import {setFilmsCount, setGenre} from './action';
 import {ALL_GENRES, FILMS_PER_LOAD} from '../const';
+import {fetchFilms} from './api-actions';
 
 type State = {
   genre: string;
@@ -20,10 +21,10 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setGenre, (state, action) => {
       state.genre = action.payload;
     })
-    .addCase(setFilms, (state, action) => {
-      state.films = action.payload;
-    })
     .addCase(setFilmsCount, (state, action) => {
       state.filmsCount = action.payload;
+    })
+    .addCase(fetchFilms.fulfilled, (state, action) => {
+      state.films = action.payload;
     });
 });
