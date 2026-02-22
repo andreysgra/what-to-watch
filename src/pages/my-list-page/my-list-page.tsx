@@ -1,14 +1,12 @@
 import Logo from '../../components/logo/logo';
 import PageFooter from '../../components/page-footer/page-footer';
 import FilmsList from '../../components/films-list/films-list';
-import {TFilms} from '../../types/film';
 import UserNavigation from '../../components/user-navigation/user-navigation';
+import {useAppSelector} from '../../hooks/use-app-selector';
 
-type MyListPageProps = {
-  films: TFilms;
-}
+function MyListPage() {
+  const films = useAppSelector((state) => state.films);
 
-function MyListPage({films}: MyListPageProps) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -22,7 +20,6 @@ function MyListPage({films}: MyListPageProps) {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <FilmsList films={films} />
       </section>
-
       <PageFooter />
     </div>
   );
