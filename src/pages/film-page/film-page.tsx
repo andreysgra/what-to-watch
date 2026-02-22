@@ -5,20 +5,22 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, RouteParam} from '../../const';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import MyListButton from '../../components/my-list-button/my-list-button';
-import {TFilmDetailed, TFilms} from '../../types/film';
+import {TFilmDetailed} from '../../types/film';
 import {TReviews} from '../../types/review';
 import FilmDescription from '../../components/film-description/film-description';
 import FilmsSimilar from '../../components/films-similar/films-similar';
+import {useAppSelector} from '../../hooks/use-app-selector';
 
 type FilmPageProps = {
-  films: TFilms;
   film: TFilmDetailed;
   reviews: TReviews;
   authorizationStatus: AuthorizationStatus;
 }
 
-function FilmPage({films, film, reviews, authorizationStatus}: FilmPageProps) {
+function FilmPage({film, reviews, authorizationStatus}: FilmPageProps) {
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  const films = useAppSelector((state) => state.films);
 
   const {
     id,
