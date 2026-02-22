@@ -8,12 +8,14 @@ type State = {
   genre: string;
   films: TFilms;
   filmsCount: number;
+  isFilmsLoading: boolean;
 }
 
 const initialState: State = {
   genre: ALL_GENRES,
   films: [],
-  filmsCount: FILMS_PER_LOAD
+  filmsCount: FILMS_PER_LOAD,
+  isFilmsLoading: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -26,5 +28,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilms.fulfilled, (state, action) => {
       state.films = action.payload;
+      state.isFilmsLoading = false;
+    })
+    .addCase(fetchFilms.pending, (state) => {
+      state.isFilmsLoading = true;
     });
 });

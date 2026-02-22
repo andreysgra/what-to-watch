@@ -6,11 +6,13 @@ import {groupBy} from '../../utils/utils';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {setFilmsCount} from '../../store/action';
+import Spinner from '../spinner/spinner';
 
 function Catalog() {
   const films = useAppSelector((state) => state.films);
   const activeGenre = useAppSelector((state) => state.genre);
   const displayedFilms = useAppSelector((state) => state.filmsCount);
+  const isFilmsLoading = useAppSelector((state) => state.isFilmsLoading);
 
   const dispatch = useAppDispatch();
 
@@ -24,6 +26,10 @@ function Catalog() {
     (activeGenre === ALL_GENRES) ? films : films.filter((film) => film.genre === activeGenre);
 
   const handleShowMoreButtonClick = () => dispatch(setFilmsCount(displayedFilms + FILMS_PER_LOAD));
+
+  if (isFilmsLoading) {
+    return <Spinner />;
+  }
 
   return (
     <section className="catalog">
