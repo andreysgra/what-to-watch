@@ -11,7 +11,7 @@ type State = {
   filmsCount: number;
   isFilmsLoading: boolean;
   authorizationStatus: AuthorizationStatus;
-  user: TUser['email'];
+  user: Pick<TUser, 'email' | 'avatarUrl'>;
 }
 
 const initialState: State = {
@@ -20,7 +20,10 @@ const initialState: State = {
   filmsCount: FILMS_PER_LOAD,
   isFilmsLoading: false,
   authorizationStatus: AuthorizationStatus.NoAuth,
-  user: ''
+  user: {
+    email: '',
+    avatarUrl: ''
+  }
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -39,14 +42,14 @@ export const reducer = createReducer(initialState, (builder) => {
       state.isFilmsLoading = true;
     })
     .addCase(fetchUserStatus.fulfilled, (state, action) => {
-      state.user = action.payload.email;
+      state.user = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
     })
     .addCase(fetchUserStatus.rejected, (state) => {
       state.authorizationStatus = AuthorizationStatus.NoAuth;
     })
     .addCase(loginUser.fulfilled, (state, action) => {
-      state.user = action.payload;
+      state.user.email = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
     });
 });
