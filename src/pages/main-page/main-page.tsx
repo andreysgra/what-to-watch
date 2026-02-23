@@ -2,17 +2,18 @@ import {Fragment} from 'react';
 import PageFooter from '../../components/page-footer/page-footer';
 import Logo from '../../components/logo/logo';
 import {TFilmPromo} from '../../types/film';
-import {AuthorizationStatus} from '../../const';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import MyListButton from '../../components/my-list-button/my-list-button';
 import Catalog from '../../components/catalog/catalog';
+import {useAppSelector} from '../../hooks/use-app-selector';
 
 type MainPageProps = {
   filmPromo: TFilmPromo;
-  authorizationStatus: AuthorizationStatus;
 }
 
-function MainPage({filmPromo, authorizationStatus}: MainPageProps) {
+function MainPage({filmPromo}: MainPageProps) {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const {
     name,
     posterImage,

@@ -14,10 +14,11 @@ import {useAppSelector} from '../../hooks/use-app-selector';
 type FilmPageProps = {
   film: TFilmDetailed;
   reviews: TReviews;
-  authorizationStatus: AuthorizationStatus;
 }
 
-function FilmPage({film, reviews, authorizationStatus}: FilmPageProps) {
+function FilmPage({film, reviews}: FilmPageProps) {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const films = useAppSelector((state) => state.films);
