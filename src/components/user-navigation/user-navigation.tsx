@@ -1,23 +1,35 @@
 import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import {useAppSelector} from '../../hooks/use-app-selector';
+import {useAppDispatch} from '../../hooks/use-app-dispatch';
+import {logoutUser} from '../../store/api-actions';
 
 type UserNavigationProps = {
   authorizationStatus?: AuthorizationStatus;
 }
 
 function UserNavigation({authorizationStatus = AuthorizationStatus.Auth}: UserNavigationProps) {
+  const user = useAppSelector((state) => state.user);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  const dispatch = useAppDispatch();
+
+  const handleLogoutClick = () => {
+    if (isAuthorized) {
+      dispatch(logoutUser());
+    }
+  };
 
   return (
     isAuthorized ? (
       <ul className="user-block">
         <li className="user-block__item">
-          <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}}>
-            <img src="img/avatar.jpg" alt="User avatar" width={63} height={63} />
+          <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}} title={user.name}>
+            <img src={user.avatarUrl} alt={`${user.name} avatar`} width={63} height={63} />
           </Link>
         </li>
         <li className="user-block__item">
-          <a className="user-block__link">Sign out</a>
+          <Link className="user-block__link" to={AppRoute.Root} onClick={handleLogoutClick}>Sign out</Link>
         </li>
       </ul>
     ) :

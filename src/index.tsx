@@ -6,8 +6,9 @@ import {film} from './mocks/film';
 import {reviews} from './mocks/reviews';
 import {Provider} from 'react-redux';
 import store from './store';
-import {fetchFilms} from './store/api-actions';
+import {fetchFilms, fetchUserStatus} from './store/api-actions';
 
+store.dispatch(fetchUserStatus());
 store.dispatch(fetchFilms());
 
 const root = ReactDOM.createRoot(

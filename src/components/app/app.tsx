@@ -17,21 +17,18 @@ type AppProps = {
   film: TFilmDetailed;
 }
 
-const authorizationStatus = AuthorizationStatus.NoAuth;
-
 function App({reviews, filmPromo, film}: AppProps) {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           index
-          element={<MainPage filmPromo={filmPromo} authorizationStatus={authorizationStatus} /> }
+          element={<MainPage filmPromo={filmPromo} /> }
         />
         <Route
           path={AppRoute.Login}
           element={
             <PrivateRoute
-              authorizationStatus={authorizationStatus}
               restrictedFor={AuthorizationStatus.Auth}
               redirectedTo={AppRoute.Root}
             >
@@ -43,7 +40,6 @@ function App({reviews, filmPromo, film}: AppProps) {
           path={AppRoute.MyList}
           element={
             <PrivateRoute
-              authorizationStatus={authorizationStatus}
               restrictedFor={AuthorizationStatus.NoAuth}
               redirectedTo={AppRoute.Login}
             >
@@ -53,13 +49,12 @@ function App({reviews, filmPromo, film}: AppProps) {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage film={film} reviews={reviews} authorizationStatus={authorizationStatus} />}
+          element={<FilmPage film={film} reviews={reviews} />}
         />
         <Route
           path={AppRoute.AddReview}
           element={
             <PrivateRoute
-              authorizationStatus={authorizationStatus}
               restrictedFor={AuthorizationStatus.NoAuth}
               redirectedTo={AppRoute.Login}
             >

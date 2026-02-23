@@ -9,7 +9,8 @@ export enum AppRoute {
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
-  NoAuth = 'NO_AUTH'
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
 }
 
 export enum RouteParam {
@@ -58,3 +59,5 @@ export const FILMS_PER_LOAD = 8;
 export const REVIEW_COLUMNS_COUNT = 2;
 
 export const ALL_GENRES = 'All genres';
+
+export const VALID_PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
