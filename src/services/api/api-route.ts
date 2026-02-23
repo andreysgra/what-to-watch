@@ -1,4 +1,5 @@
 export enum ApiRoute {
   Films = '/films',
-  Login = '/login'
+  Login = '/login',
+  Logout = '/logout'
 }

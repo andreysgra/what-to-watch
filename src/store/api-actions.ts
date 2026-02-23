@@ -3,7 +3,7 @@ import {TFilms} from '../types/film';
 import {AxiosInstance} from 'axios';
 import {ApiRoute} from '../services/api/api-route';
 import {TUser, TUserAuth} from '../types/user';
-import {saveToken} from '../services/token';
+import {dropToken, saveToken} from '../services/token';
 
 export const fetchFilms = createAsyncThunk<TFilms, undefined, {extra: AxiosInstance}>(
   'films/fetch',
@@ -23,7 +23,7 @@ export const fetchUserStatus = createAsyncThunk<TUser, undefined, {extra: AxiosI
   }
 );
 
-export const loginUser = createAsyncThunk<TUserAuth['email'], TUserAuth, { extra: AxiosInstance }>(
+export const loginUser = createAsyncThunk<TUser, TUserAuth, { extra: AxiosInstance }>(
   'user/login',
   async ({email, password}, {extra: api}) => {
     const {data} = await api.post<TUser>(ApiRoute.Login, {email, password});
@@ -31,6 +31,15 @@ export const loginUser = createAsyncThunk<TUserAuth['email'], TUserAuth, { extra
 
     saveToken(token);
 
-    return email;
+    return data;
+  }
+);
+
+export const logoutUser = createAsyncThunk<void, undefined, { extra: AxiosInstance }>(
+  'user/logout',
+  async (_, {extra: api}) => {
+    await api.delete(ApiRoute.Logout);
+
+    dropToken();
   }
 );
