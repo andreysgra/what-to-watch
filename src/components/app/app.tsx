@@ -8,16 +8,15 @@ import PlayerPage from '../../pages/player-page/player-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {TFilmDetailed, TFilmPromo} from '../../types/film';
+import {TFilmPromo} from '../../types/film';
 import {TReviews} from '../../types/review';
 
 type AppProps = {
   reviews: TReviews;
   filmPromo: TFilmPromo;
-  film: TFilmDetailed;
 }
 
-function App({reviews, filmPromo, film}: AppProps) {
+function App({reviews, filmPromo}: AppProps) {
   return (
     <BrowserRouter>
       <Routes>
@@ -49,7 +48,7 @@ function App({reviews, filmPromo, film}: AppProps) {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage film={film} reviews={reviews} />}
+          element={<FilmPage reviews={reviews} />}
         />
         <Route
           path={AppRoute.AddReview}

@@ -1,27 +1,49 @@
-import {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import Logo from '../../components/logo/logo';
 import PageFooter from '../../components/page-footer/page-footer';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, RouteParam} from '../../const';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import MyListButton from '../../components/my-list-button/my-list-button';
-import {TFilmDetailed} from '../../types/film';
 import {TReviews} from '../../types/review';
 import FilmDescription from '../../components/film-description/film-description';
 import FilmsSimilar from '../../components/films-similar/films-similar';
 import {useAppSelector} from '../../hooks/use-app-selector';
+import {useAppDispatch} from '../../hooks/use-app-dispatch';
+import {fetchFilm} from '../../store/api-actions';
+import Spinner from '../../components/spinner/spinner';
 
 type FilmPageProps = {
-  film: TFilmDetailed;
   reviews: TReviews;
 }
 
-function FilmPage({film, reviews}: FilmPageProps) {
+function FilmPage({reviews}: FilmPageProps): React.JSX.Element | null {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const films = useAppSelector((state) => state.films);
+  const film = useAppSelector((state) => state.film);
+  const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
+
+  const dispatch = useAppDispatch();
+
+  const params = useParams();
+
+  useEffect(() => {
+    const {id} = params;
+
+    if (id) {
+      dispatch(fetchFilm(id));
+    }
+  }, [params, dispatch]);
+
+  if (!film) {
+    return null;
+  }
+
+  if (isFilmLoading) {
+    return <Spinner />;
+  }
 
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
-
-  const films = useAppSelector((state) => state.films);
 
   const {
     id,
