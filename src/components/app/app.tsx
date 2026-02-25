@@ -8,21 +8,16 @@ import PlayerPage from '../../pages/player-page/player-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {TFilmPromo} from '../../types/film';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../services/browser-history';
 
-type AppProps = {
-  filmPromo: TFilmPromo;
-}
-
-function App({filmPromo}: AppProps) {
+function App() {
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           index
-          element={<MainPage filmPromo={filmPromo} /> }
+          element={<MainPage /> }
         />
         <Route
           path={AppRoute.Login}
