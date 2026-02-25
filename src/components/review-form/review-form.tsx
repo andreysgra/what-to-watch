@@ -1,8 +1,13 @@
 import {CommentLength, STARS_COUNT} from '../../const';
 import RatingStar from '../../components/rating-star/rating-star';
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
+import {TReviewContent} from '../../types/review';
 
-function ReviewForm() {
+type ReviewFormProps = {
+  onSubmit: (formData: Omit<TReviewContent,'id'>) => void;
+}
+
+function ReviewForm({onSubmit}: ReviewFormProps) {
   const [rating, setRating] = useState<number>(0);
   const [text, setText] = useState<string>('');
 
@@ -13,10 +18,18 @@ function ReviewForm() {
     setText(evt.target.value);
   };
 
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    onSubmit({comment: text, rating});
+    setRating(0);
+    setText('');
+  };
+
   const isDisabled = !rating || (text.length < CommentLength.Min || text.length > CommentLength.Max);
 
   return (
-    <form action="#" className="add-review__form">
+    <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">
           {Array.from({length: STARS_COUNT}, (_, i: number) => (
