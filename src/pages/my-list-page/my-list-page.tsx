@@ -3,9 +3,15 @@ import PageFooter from '../../components/page-footer/page-footer';
 import FilmsList from '../../components/films-list/films-list';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import {useAppSelector} from '../../hooks/use-app-selector';
+import Spinner from '../../components/spinner/spinner';
 
 function MyListPage() {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.filmsFavorite);
+  const isFilmsFavoriteLoading = useAppSelector((state) => state.isFilmsFavoriteLoading);
+
+  if (isFilmsFavoriteLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="user-page">

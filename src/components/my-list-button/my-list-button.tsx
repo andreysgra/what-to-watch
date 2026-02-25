@@ -1,8 +1,12 @@
+import {useAppSelector} from '../../hooks/use-app-selector';
+
 type MyListButtonProps = {
   isFavorite: boolean;
 }
 
 function MyListButton({isFavorite}: MyListButtonProps) {
+  const films = useAppSelector((state) => state.filmsFavorite);
+
   return (
     <button className="btn btn--list film-card__button" type="button">
       {!isFavorite ? (
@@ -16,7 +20,7 @@ function MyListButton({isFavorite}: MyListButtonProps) {
           </svg>
         )}
       <span>My list</span>
-      <span className="film-card__count">9</span>
+      <span className="film-card__count">{films.length}</span>
     </button>
   );
 }

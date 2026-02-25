@@ -10,8 +10,23 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../services/browser-history';
+import {useAppSelector} from '../../hooks/use-app-selector';
+import {useEffect} from 'react';
+import {useAppDispatch} from '../../hooks/use-app-dispatch';
+import {fetchFilmsFavorite} from '../../store/api-actions';
 
 function App() {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useAppDispatch();
+
+  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  useEffect(() => {
+    if (isAuthorized) {
+      dispatch(fetchFilmsFavorite());
+    }
+  }, [isAuthorized, dispatch]);
+
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
