@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {TFilm, TFilmDetailed, TFilms} from '../types/film';
+import {TFilm, TFilmDetailed, TFilmPromo, TFilms} from '../types/film';
 import {AxiosError, AxiosInstance} from 'axios';
 import {ApiRoute} from '../services/api/api-route';
 import {TUser, TUserAuth} from '../types/user';
@@ -39,6 +39,15 @@ export const fetchFilm = createAsyncThunk<TFilmDetailed, TFilmDetailed['id'], {
 
       return Promise.reject(error);
     }
+  }
+);
+
+export const fetchFilmPromo = createAsyncThunk<TFilmPromo, undefined, {extra: AxiosInstance}>(
+  'film-promo/fetch',
+  async (_, {extra: api}) => {
+    const {data} = await api.get<TFilmPromo>(ApiRoute.Promo);
+
+    return data;
   }
 );
 

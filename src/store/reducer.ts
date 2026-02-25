@@ -1,8 +1,16 @@
-import {TFilmDetailed, TFilms} from '../types/film';
+import {TFilmDetailed, TFilmPromo, TFilms} from '../types/film';
 import {createReducer} from '@reduxjs/toolkit';
 import {setFilmsCount, setGenre} from './action';
 import {ALL_GENRES, AuthorizationStatus, FILMS_PER_LOAD} from '../const';
-import {fetchComments, fetchFilm, fetchFilms, fetchUserStatus, loginUser, logoutUser} from './api-actions';
+import {
+  fetchComments,
+  fetchFilm,
+  fetchFilmPromo,
+  fetchFilms,
+  fetchUserStatus,
+  loginUser,
+  logoutUser
+} from './api-actions';
 import {TUser} from '../types/user';
 import {TReviews} from '../types/review';
 
@@ -10,6 +18,7 @@ type State = {
   genre: string;
   films: TFilms;
   film: TFilmDetailed | null;
+  filmPromo: TFilmPromo | null;
   comments: TReviews;
   filmsCount: number;
   isFilmsLoading: boolean;
@@ -22,6 +31,7 @@ const initialState: State = {
   genre: ALL_GENRES,
   films: [],
   film: null,
+  filmPromo: null,
   comments: [],
   filmsCount: FILMS_PER_LOAD,
   isFilmsLoading: false,
@@ -57,6 +67,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilm.rejected, (state) => {
       state.isFilmLoading = false;
+    })
+    .addCase(fetchFilmPromo.fulfilled, (state, action) => {
+      state.filmPromo = action.payload;
     })
     .addCase(fetchComments.fulfilled, (state, action) => {
       state.comments = action.payload;
