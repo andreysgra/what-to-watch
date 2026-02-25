@@ -11,7 +11,8 @@ import {
   fetchFilmsSimilar,
   fetchUserStatus,
   loginUser,
-  logoutUser
+  logoutUser,
+  postComment
 } from './api-actions';
 import {TUser} from '../types/user';
 import {TReviews} from '../types/review';
@@ -94,6 +95,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchComments.fulfilled, (state, action) => {
       state.comments = action.payload;
+    })
+    .addCase(postComment.fulfilled, (state, action) => {
+      state.comments.push(action.payload);
     })
     .addCase(fetchUserStatus.fulfilled, (state, action) => {
       state.user = action.payload;
