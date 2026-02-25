@@ -68,7 +68,7 @@ function FilmPage(): React.JSX.Element | null {
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
             <Logo />
-            <UserNavigation authorizationStatus={authorizationStatus} />
+            <UserNavigation />
           </header>
           <div className="film-card__wrap">
             <div className="film-card__desc">
