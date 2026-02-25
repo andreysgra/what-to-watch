@@ -6,7 +6,7 @@ import {
   fetchComments,
   fetchFilm,
   fetchFilmPromo,
-  fetchFilms,
+  fetchFilms, fetchFilmsSimilar,
   fetchUserStatus,
   loginUser,
   logoutUser
@@ -19,6 +19,7 @@ type State = {
   films: TFilms;
   film: TFilmDetailed | null;
   filmPromo: TFilmPromo | null;
+  filmsSimilar: TFilms;
   comments: TReviews;
   filmsCount: number;
   isFilmsLoading: boolean;
@@ -32,6 +33,7 @@ const initialState: State = {
   films: [],
   film: null,
   filmPromo: null,
+  filmsSimilar: [],
   comments: [],
   filmsCount: FILMS_PER_LOAD,
   isFilmsLoading: false,
@@ -70,6 +72,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilmPromo.fulfilled, (state, action) => {
       state.filmPromo = action.payload;
+    })
+    .addCase(fetchFilmsSimilar.fulfilled, (state, action) => {
+      state.filmsSimilar = action.payload;
     })
     .addCase(fetchComments.fulfilled, (state, action) => {
       state.comments = action.payload;
