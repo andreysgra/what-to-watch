@@ -9,16 +9,14 @@ import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {TFilmPromo} from '../../types/film';
-import {TReviews} from '../../types/review';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../services/browser-history';
 
 type AppProps = {
-  reviews: TReviews;
   filmPromo: TFilmPromo;
 }
 
-function App({reviews, filmPromo}: AppProps) {
+function App({filmPromo}: AppProps) {
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
@@ -50,7 +48,7 @@ function App({reviews, filmPromo}: AppProps) {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage reviews={reviews} />}
+          element={<FilmPage />}
         />
         <Route
           path={AppRoute.AddReview}
