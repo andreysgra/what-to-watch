@@ -60,6 +60,15 @@ export const fetchFilmsSimilar = createAsyncThunk<TFilms, TFilm['id'], {extra: A
   }
 );
 
+export const fetchFilmsFavorite = createAsyncThunk<TFilms, undefined, {extra: AxiosInstance}>(
+  'films/fetch-favorite',
+  async (_, {extra: api}) => {
+    const {data} = await api.get<TFilms>(ApiRoute.Favorite);
+
+    return data;
+  }
+);
+
 export const fetchComments = createAsyncThunk<TReviews, TFilm['id'], {extra: AxiosInstance}>(
   'film/fetch-comments',
   async (id, {extra: api}) => {

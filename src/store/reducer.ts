@@ -6,7 +6,9 @@ import {
   fetchComments,
   fetchFilm,
   fetchFilmPromo,
-  fetchFilms, fetchFilmsSimilar,
+  fetchFilms,
+  fetchFilmsFavorite,
+  fetchFilmsSimilar,
   fetchUserStatus,
   loginUser,
   logoutUser
@@ -20,10 +22,12 @@ type State = {
   film: TFilmDetailed | null;
   filmPromo: TFilmPromo | null;
   filmsSimilar: TFilms;
+  filmsFavorite: TFilms;
   comments: TReviews;
   filmsCount: number;
   isFilmsLoading: boolean;
   isFilmLoading: boolean;
+  isFilmsFavoriteLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   user: Pick<TUser, 'name' | 'avatarUrl'>;
 }
@@ -34,10 +38,12 @@ const initialState: State = {
   film: null,
   filmPromo: null,
   filmsSimilar: [],
+  filmsFavorite: [],
   comments: [],
   filmsCount: FILMS_PER_LOAD,
   isFilmsLoading: false,
   isFilmLoading: false,
+  isFilmsFavoriteLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: {
     name: '',
@@ -75,6 +81,16 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilmsSimilar.fulfilled, (state, action) => {
       state.filmsSimilar = action.payload;
+    })
+    .addCase(fetchFilmsFavorite.fulfilled, (state, action) => {
+      state.filmsFavorite = action.payload;
+      state.isFilmsFavoriteLoading = false;
+    })
+    .addCase(fetchFilmsFavorite.pending, (state) => {
+      state.isFilmsFavoriteLoading = true;
+    })
+    .addCase(fetchFilmsFavorite.rejected, (state) => {
+      state.isFilmsFavoriteLoading = false;
     })
     .addCase(fetchComments.fulfilled, (state, action) => {
       state.comments = action.payload;
