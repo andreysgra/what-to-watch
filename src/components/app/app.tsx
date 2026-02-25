@@ -1,5 +1,5 @@
 import MainPage from '../../pages/main-page/main-page';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import LoginPage from '../../pages/login-page/login-page';
 import MyListPage from '../../pages/my-list-page/my-list-page';
@@ -8,22 +8,31 @@ import PlayerPage from '../../pages/player-page/player-page';
 import AddReviewPage from '../../pages/add-review-page/add-review-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
-import {TFilmDetailed, TFilmPromo} from '../../types/film';
-import {TReviews} from '../../types/review';
+import HistoryRouter from '../history-router/history-router';
+import browserHistory from '../../services/browser-history';
+import {useAppSelector} from '../../hooks/use-app-selector';
+import {useEffect} from 'react';
+import {useAppDispatch} from '../../hooks/use-app-dispatch';
+import {fetchFilmsFavorite} from '../../store/api-actions';
 
-type AppProps = {
-  reviews: TReviews;
-  filmPromo: TFilmPromo;
-  film: TFilmDetailed;
-}
+function App() {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useAppDispatch();
 
-function App({reviews, filmPromo, film}: AppProps) {
+  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+
+  useEffect(() => {
+    if (isAuthorized) {
+      dispatch(fetchFilmsFavorite());
+    }
+  }, [isAuthorized, dispatch]);
+
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           index
-          element={<MainPage filmPromo={filmPromo} /> }
+          element={<MainPage /> }
         />
         <Route
           path={AppRoute.Login}
@@ -49,7 +58,7 @@ function App({reviews, filmPromo, film}: AppProps) {
         />
         <Route
           path={AppRoute.Film}
-          element={<FilmPage film={film} reviews={reviews} />}
+          element={<FilmPage />}
         />
         <Route
           path={AppRoute.AddReview}
@@ -71,7 +80,7 @@ function App({reviews, filmPromo, film}: AppProps) {
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

@@ -1,10 +1,28 @@
 import {CommentLength, STARS_COUNT} from '../../const';
 import RatingStar from '../../components/rating-star/rating-star';
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import {TReviewContent} from '../../types/review';
+import {useAppSelector} from '../../hooks/use-app-selector';
+import {SubmitStatus} from '../../services/api/const';
 
-function ReviewForm() {
+type ReviewFormProps = {
+  onSubmit: (formData: Omit<TReviewContent,'id'>) => void;
+}
+
+function ReviewForm({onSubmit}: ReviewFormProps) {
   const [rating, setRating] = useState<number>(0);
   const [text, setText] = useState<string>('');
+
+  const submitStatus = useAppSelector((state) => state.commentStatus);
+
+  const isSubmitting = submitStatus === SubmitStatus.Pending;
+
+  useEffect(() => {
+    if (submitStatus === SubmitStatus.Fulfilled) {
+      setRating(0);
+      setText('');
+    }
+  }, [submitStatus]);
 
   const handleRadioChange = (evt: ChangeEvent<HTMLInputElement>) =>
     setRating(Number(evt.target.value));
@@ -13,10 +31,16 @@ function ReviewForm() {
     setText(evt.target.value);
   };
 
-  const isDisabled = !rating || (text.length < CommentLength.Min || text.length > CommentLength.Max);
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    onSubmit({comment: text, rating});
+  };
+
+  const isDisabled = isSubmitting || !rating || (text.length < CommentLength.Min || text.length > CommentLength.Max);
 
   return (
-    <form action="#" className="add-review__form">
+    <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">
           {Array.from({length: STARS_COUNT}, (_, i: number) => (
