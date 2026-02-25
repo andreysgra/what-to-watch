@@ -1,5 +1,5 @@
 import MainPage from '../../pages/main-page/main-page';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import LoginPage from '../../pages/login-page/login-page';
 import MyListPage from '../../pages/my-list-page/my-list-page';
@@ -10,6 +10,8 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import PrivateRoute from '../private-route/private-route';
 import {TFilmPromo} from '../../types/film';
 import {TReviews} from '../../types/review';
+import HistoryRouter from '../history-router/history-router';
+import browserHistory from '../../services/browser-history';
 
 type AppProps = {
   reviews: TReviews;
@@ -18,7 +20,7 @@ type AppProps = {
 
 function App({reviews, filmPromo}: AppProps) {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           index
@@ -70,7 +72,7 @@ function App({reviews, filmPromo}: AppProps) {
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
