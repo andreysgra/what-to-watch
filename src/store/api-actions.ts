@@ -1,9 +1,14 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {TFilmDetailed, TFilms} from '../types/film';
-import {AxiosInstance} from 'axios';
+import {AxiosError, AxiosInstance} from 'axios';
 import {ApiRoute} from '../services/api/api-route';
 import {TUser, TUserAuth} from '../types/user';
 import {dropToken, saveToken} from '../services/token';
+import {AppDispatch} from '../types/state';
+import {HttpCode} from '../services/api/http-code';
+import {redirectToRoute} from './action';
+import {AppRoute} from '../const';
+import browserHistory from '../services/browser-history';
 
 export const fetchFilms = createAsyncThunk<TFilms, undefined, {extra: AxiosInstance}>(
   'films/fetch',
@@ -14,12 +19,25 @@ export const fetchFilms = createAsyncThunk<TFilms, undefined, {extra: AxiosInsta
   }
 );
 
-export const fetchFilm = createAsyncThunk<TFilmDetailed, TFilmDetailed['id'], { extra: AxiosInstance }>(
+export const fetchFilm = createAsyncThunk<TFilmDetailed, TFilmDetailed['id'], {
+  extra: AxiosInstance;
+  dispatch: AppDispatch;
+}>(
   'film/fetch',
-  async (id, {extra: api}) => {
-    const {data} = await api.get<TFilmDetailed>(`${ApiRoute.Films}/${id}`);
+  async (id, {extra: api, dispatch}) => {
+    try {
+      const {data} = await api.get<TFilmDetailed>(`${ApiRoute.Films}/${id}`);
 
-    return data;
+      return data;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+
+      if (axiosError.response?.status === HttpCode.NotFound) {
+        dispatch(redirectToRoute(AppRoute.NotFound));
+      }
+
+      return Promise.reject(error);
+    }
   }
 );
 
@@ -39,6 +57,7 @@ export const loginUser = createAsyncThunk<TUser, TUserAuth, { extra: AxiosInstan
     const {token} = data;
 
     saveToken(token);
+    browserHistory.back();
 
     return data;
   }
