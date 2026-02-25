@@ -9,13 +9,13 @@ import FilmDescription from '../../components/film-description/film-description'
 import FilmsSimilar from '../../components/films-similar/films-similar';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
-import {fetchComments, fetchFilm} from '../../store/api-actions';
+import {fetchComments, fetchFilm, fetchFilmsSimilar} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 
 function FilmPage(): React.JSX.Element | null {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const films = useAppSelector((state) => state.films);
   const film = useAppSelector((state) => state.film);
+  const filmsSimilar = useAppSelector((state) => state.filmsSimilar);
   const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
   const comments = useAppSelector((state) => state.comments);
 
@@ -29,6 +29,7 @@ function FilmPage(): React.JSX.Element | null {
     if (id) {
       dispatch(fetchFilm(id));
       dispatch(fetchComments(id));
+      dispatch(fetchFilmsSimilar(id));
     }
   }, [params, dispatch]);
 
@@ -105,7 +106,7 @@ function FilmPage(): React.JSX.Element | null {
       </section>
 
       <div className="page-content">
-        <FilmsSimilar similarFilms={films} />
+        <FilmsSimilar films={filmsSimilar} />
         <PageFooter />
       </div>
     </Fragment>
