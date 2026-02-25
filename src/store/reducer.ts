@@ -2,13 +2,15 @@ import {TFilmDetailed, TFilms} from '../types/film';
 import {createReducer} from '@reduxjs/toolkit';
 import {setFilmsCount, setGenre} from './action';
 import {ALL_GENRES, AuthorizationStatus, FILMS_PER_LOAD} from '../const';
-import {fetchFilm, fetchFilms, fetchUserStatus, loginUser, logoutUser} from './api-actions';
+import {fetchComments, fetchFilm, fetchFilms, fetchUserStatus, loginUser, logoutUser} from './api-actions';
 import {TUser} from '../types/user';
+import {TReviews} from '../types/review';
 
 type State = {
   genre: string;
   films: TFilms;
   film: TFilmDetailed | null;
+  comments: TReviews;
   filmsCount: number;
   isFilmsLoading: boolean;
   isFilmLoading: boolean;
@@ -20,6 +22,7 @@ const initialState: State = {
   genre: ALL_GENRES,
   films: [],
   film: null,
+  comments: [],
   filmsCount: FILMS_PER_LOAD,
   isFilmsLoading: false,
   isFilmLoading: false,
@@ -54,6 +57,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilm.rejected, (state) => {
       state.isFilmLoading = false;
+    })
+    .addCase(fetchComments.fulfilled, (state, action) => {
+      state.comments = action.payload;
     })
     .addCase(fetchUserStatus.fulfilled, (state, action) => {
       state.user = action.payload;

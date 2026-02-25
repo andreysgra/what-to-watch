@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {TFilmDetailed, TFilms} from '../types/film';
+import {TFilm, TFilmDetailed, TFilms} from '../types/film';
 import {AxiosError, AxiosInstance} from 'axios';
 import {ApiRoute} from '../services/api/api-route';
 import {TUser, TUserAuth} from '../types/user';
@@ -9,6 +9,7 @@ import {HttpCode} from '../services/api/http-code';
 import {redirectToRoute} from './action';
 import {AppRoute} from '../const';
 import browserHistory from '../services/browser-history';
+import {TReviews} from '../types/review';
 
 export const fetchFilms = createAsyncThunk<TFilms, undefined, {extra: AxiosInstance}>(
   'films/fetch',
@@ -38,6 +39,15 @@ export const fetchFilm = createAsyncThunk<TFilmDetailed, TFilmDetailed['id'], {
 
       return Promise.reject(error);
     }
+  }
+);
+
+export const fetchComments = createAsyncThunk<TReviews, TFilm['id'], {extra: AxiosInstance}>(
+  'film/fetch-comments',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<TReviews>(`${ApiRoute.Comments}/${id}`);
+
+    return data;
   }
 );
 
