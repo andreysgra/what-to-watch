@@ -16,6 +16,7 @@ import {
 } from './api-actions';
 import {TUser} from '../types/user';
 import {TReviews} from '../types/review';
+import {SubmitStatus} from '../services/api/const';
 
 type State = {
   genre: string;
@@ -31,6 +32,7 @@ type State = {
   isFilmsFavoriteLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   user: Pick<TUser, 'name' | 'avatarUrl'>;
+  commentStatus: SubmitStatus;
 }
 
 const initialState: State = {
@@ -49,7 +51,8 @@ const initialState: State = {
   user: {
     name: '',
     avatarUrl: ''
-  }
+  },
+  commentStatus: SubmitStatus.Still
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -95,6 +98,13 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchComments.fulfilled, (state, action) => {
       state.comments = action.payload;
+      state.commentStatus = SubmitStatus.Fulfilled;
+    })
+    .addCase(postComment.pending, (state) => {
+      state.commentStatus = SubmitStatus.Pending;
+    })
+    .addCase(postComment.rejected, (state) => {
+      state.commentStatus = SubmitStatus.Rejected;
     })
     .addCase(postComment.fulfilled, (state, action) => {
       state.comments.push(action.payload);
