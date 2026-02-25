@@ -1,15 +1,17 @@
-import {TFilms} from '../types/film';
+import {TFilmDetailed, TFilms} from '../types/film';
 import {createReducer} from '@reduxjs/toolkit';
 import {setFilmsCount, setGenre} from './action';
 import {ALL_GENRES, AuthorizationStatus, FILMS_PER_LOAD} from '../const';
-import {fetchFilms, fetchUserStatus, loginUser, logoutUser} from './api-actions';
+import {fetchFilm, fetchFilms, fetchUserStatus, loginUser, logoutUser} from './api-actions';
 import {TUser} from '../types/user';
 
 type State = {
   genre: string;
   films: TFilms;
+  film: TFilmDetailed | null;
   filmsCount: number;
   isFilmsLoading: boolean;
+  isFilmLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   user: Pick<TUser, 'name' | 'avatarUrl'>;
 }
@@ -17,8 +19,10 @@ type State = {
 const initialState: State = {
   genre: ALL_GENRES,
   films: [],
+  film: null,
   filmsCount: FILMS_PER_LOAD,
   isFilmsLoading: false,
+  isFilmLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: {
     name: '',
@@ -40,6 +44,16 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFilms.pending, (state) => {
       state.isFilmsLoading = true;
+    })
+    .addCase(fetchFilm.fulfilled, (state, action) => {
+      state.film = action.payload;
+      state.isFilmLoading = false;
+    })
+    .addCase(fetchFilm.pending, (state) => {
+      state.isFilmLoading = true;
+    })
+    .addCase(fetchFilm.rejected, (state) => {
+      state.isFilmLoading = false;
     })
     .addCase(fetchUserStatus.fulfilled, (state, action) => {
       state.user = action.payload;

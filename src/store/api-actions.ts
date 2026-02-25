@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {TFilms} from '../types/film';
+import {TFilmDetailed, TFilms} from '../types/film';
 import {AxiosInstance} from 'axios';
 import {ApiRoute} from '../services/api/api-route';
 import {TUser, TUserAuth} from '../types/user';
@@ -9,6 +9,15 @@ export const fetchFilms = createAsyncThunk<TFilms, undefined, {extra: AxiosInsta
   'films/fetch',
   async (_, {extra: api}) => {
     const {data} = await api.get<TFilms>(ApiRoute.Films);
+
+    return data;
+  }
+);
+
+export const fetchFilm = createAsyncThunk<TFilmDetailed, TFilmDetailed['id'], { extra: AxiosInstance }>(
+  'film/fetch',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<TFilmDetailed>(`${ApiRoute.Films}/${id}`);
 
     return data;
   }
