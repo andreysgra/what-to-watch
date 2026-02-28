@@ -9,16 +9,21 @@ import FilmDescription from '../../components/film-description/film-description'
 import FilmsSimilar from '../../components/films-similar/films-similar';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
-import {fetchComments, fetchFilm, fetchFilmsSimilar} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
-import {AuthorizationStatus} from '../../services/api/const';
+import {getFilm, getIsFilmLoading} from '../../store/film/selectors';
+import {getFilmsSimilar} from '../../store/films/selectors';
+import {getComments} from '../../store/comments/selectors';
+import {getIsAuthorized} from '../../store/user/selectors';
+import {fetchFilm} from '../../store/film/api-actions';
+import {fetchComments} from '../../store/comments/api-actions';
+import {fetchFilmsSimilar} from '../../store/films/api-actions';
 
 function FilmPage(): React.JSX.Element | null {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const film = useAppSelector((state) => state.film);
-  const filmsSimilar = useAppSelector((state) => state.filmsSimilar);
-  const isFilmLoading = useAppSelector((state) => state.isFilmLoading);
-  const comments = useAppSelector((state) => state.comments);
+  const film = useAppSelector(getFilm);
+  const filmsSimilar = useAppSelector(getFilmsSimilar);
+  const isFilmLoading = useAppSelector(getIsFilmLoading);
+  const comments = useAppSelector(getComments);
+  const isAuthorized = useAppSelector(getIsAuthorized);
 
   const dispatch = useAppDispatch();
 
@@ -41,8 +46,6 @@ function FilmPage(): React.JSX.Element | null {
   if (isFilmLoading) {
     return <Spinner />;
   }
-
-  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const {
     id,

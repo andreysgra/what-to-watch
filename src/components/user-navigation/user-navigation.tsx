@@ -2,14 +2,12 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
-import {logoutUser} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../services/api/const';
+import {getIsAuthorized, getUser} from '../../store/user/selectors';
+import {logoutUser} from '../../store/user/api-actions';
 
 function UserNavigation() {
-  const user = useAppSelector((state) => state.user);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-
-  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+  const user = useAppSelector(getUser);
+  const isAuthorized = useAppSelector(getIsAuthorized);
 
   const dispatch = useAppDispatch();
 

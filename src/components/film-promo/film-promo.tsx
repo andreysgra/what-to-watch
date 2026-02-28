@@ -2,17 +2,16 @@ import {useAppSelector} from '../../hooks/use-app-selector';
 import Logo from '../logo/logo';
 import UserNavigation from '../user-navigation/user-navigation';
 import MyListButton from '../my-list-button/my-list-button';
-import {AuthorizationStatus} from '../../services/api/const';
+import {getIsAuthorized} from '../../store/user/selectors';
+import {getFilmPromo} from '../../store/film-promo/selectors';
 
 function FilmPromo() {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const filmPromo = useAppSelector((state) => state.filmPromo);
+  const filmPromo = useAppSelector(getFilmPromo);
+  const isAuthorized = useAppSelector(getIsAuthorized);
 
   if (!filmPromo) {
     return null;
   }
-
-  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   const {
     name,

@@ -4,6 +4,7 @@ import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {TReviewContent} from '../../types/review';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {SubmitStatus} from '../../services/api/const';
+import {getCommentStatus} from '../../store/comments/selectors';
 
 type ReviewFormProps = {
   onSubmit: (formData: Omit<TReviewContent,'id'>) => void;
@@ -13,7 +14,7 @@ function ReviewForm({onSubmit}: ReviewFormProps) {
   const [rating, setRating] = useState<number>(0);
   const [text, setText] = useState<string>('');
 
-  const submitStatus = useAppSelector((state) => state.commentStatus);
+  const submitStatus = useAppSelector(getCommentStatus);
 
   const isSubmitting = submitStatus === SubmitStatus.Pending;
 
