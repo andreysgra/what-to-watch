@@ -2,7 +2,7 @@ import {useAppSelector} from '../../hooks/use-app-selector';
 import Logo from '../logo/logo';
 import UserNavigation from '../user-navigation/user-navigation';
 import MyListButton from '../my-list-button/my-list-button';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus} from '../../services/api/const';
 
 function FilmPromo() {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);

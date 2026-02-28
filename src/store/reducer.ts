@@ -1,7 +1,7 @@
 import {TFilmDetailed, TFilmPromo, TFilms} from '../types/film';
 import {createReducer} from '@reduxjs/toolkit';
 import {setFilmsCount, setGenre} from './action';
-import {ALL_GENRES, AuthorizationStatus, FILMS_PER_LOAD} from '../const';
+import {ALL_GENRES, FILMS_PER_LOAD} from '../const';
 import {
   fetchComments,
   fetchFilm,
@@ -16,7 +16,7 @@ import {
 } from './api-actions';
 import {TUser} from '../types/user';
 import {TReviews} from '../types/review';
-import {SubmitStatus} from '../services/api/const';
+import {AuthorizationStatus, SubmitStatus} from '../services/api/const';
 
 type State = {
   genre: string;

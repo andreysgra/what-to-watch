@@ -1,8 +1,9 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {logoutUser} from '../../store/api-actions';
+import {AuthorizationStatus} from '../../services/api/const';
 
 function UserNavigation() {
   const user = useAppSelector((state) => state.user);

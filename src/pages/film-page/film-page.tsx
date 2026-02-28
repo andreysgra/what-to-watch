@@ -2,7 +2,7 @@ import React, {Fragment, useEffect} from 'react';
 import Logo from '../../components/logo/logo';
 import PageFooter from '../../components/page-footer/page-footer';
 import {Link, useParams} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus, RouteParam} from '../../const';
+import {AppRoute, RouteParam} from '../../const';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import MyListButton from '../../components/my-list-button/my-list-button';
 import FilmDescription from '../../components/film-description/film-description';
@@ -11,6 +11,7 @@ import {useAppSelector} from '../../hooks/use-app-selector';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {fetchComments, fetchFilm, fetchFilmsSimilar} from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
+import {AuthorizationStatus} from '../../services/api/const';
 
 function FilmPage(): React.JSX.Element | null {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
