@@ -8,12 +8,6 @@ export enum AppRoute {
   NotFound = '/404'
 }
 
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
-}
-
 export enum RouteParam {
   Id = ':id',
   Status = ':status'

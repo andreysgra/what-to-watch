@@ -2,15 +2,17 @@ import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import {TReviewContent} from '../../types/review';
-import {fetchFilm, postComment} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {Link, useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {AppRoute, RouteParam} from '../../const';
 import {useEffect} from 'react';
+import {fetchFilm} from '../../store/film/api-actions';
+import {getFilm} from '../../store/film/selectors';
+import {postComment} from '../../store/comments/api-actions';
 
 function AddReviewPage() {
-  const film = useAppSelector((state) => state.film);
+  const film = useAppSelector(getFilm);
 
   const dispatch = useAppDispatch();
   const params = useParams();

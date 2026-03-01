@@ -2,28 +2,26 @@ import GenresList from '../genres-list/genres-list';
 import FilmsList from '../films-list/films-list';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {ALL_GENRES, FILMS_PER_LOAD, MAX_GENRES_COUNT} from '../../const';
-import {groupBy} from '../../utils/utils';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
-import {setFilmsCount} from '../../store/action';
 import Spinner from '../spinner/spinner';
+import {getIsFilmsLoading} from '../../store/films/selectors';
+import {getFilmsByGenre, getFilmsCount, getGroupedFilms} from '../../store/site-process/selectors';
+import {setFilmsCount} from '../../store/site-process/slice';
 
 function Catalog() {
-  const films = useAppSelector((state) => state.films);
-  const activeGenre = useAppSelector((state) => state.genre);
-  const displayedFilms = useAppSelector((state) => state.filmsCount);
-  const isFilmsLoading = useAppSelector((state) => state.isFilmsLoading);
+  const displayedFilms = useAppSelector(getFilmsCount);
+  const isFilmsLoading = useAppSelector(getIsFilmsLoading);
+  const filmsGroupedByGenre = useAppSelector(getGroupedFilms);
+  const filmsByGenre = useAppSelector(getFilmsByGenre);
 
   const dispatch = useAppDispatch();
 
-  const filmsGroupedByGenre = groupBy(films, (film) => film.genre);
 
   const genres = [ALL_GENRES, ...Object.keys(filmsGroupedByGenre)
     .slice(0, MAX_GENRES_COUNT)
     .sort()];
 
-  const filmsByGenre =
-    (activeGenre === ALL_GENRES) ? films : films.filter((film) => film.genre === activeGenre);
 
   const handleShowMoreButtonClick = () => dispatch(setFilmsCount(displayedFilms + FILMS_PER_LOAD));
 

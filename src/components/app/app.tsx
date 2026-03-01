@@ -1,6 +1,6 @@
 import MainPage from '../../pages/main-page/main-page';
 import {Route, Routes} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import LoginPage from '../../pages/login-page/login-page';
 import MyListPage from '../../pages/my-list-page/my-list-page';
 import FilmPage from '../../pages/film-page/film-page';
@@ -13,13 +13,15 @@ import browserHistory from '../../services/browser-history';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {useEffect} from 'react';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
-import {fetchFilmsFavorite} from '../../store/api-actions';
+import {AuthorizationStatus} from '../../services/api/const';
+import {getIsAuthorized} from '../../store/user/selectors';
+import {fetchFilmsFavorite} from '../../store/films/api-actions';
 
 function App() {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuthorized = useAppSelector(getIsAuthorized);
+
   const dispatch = useAppDispatch();
 
-  const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
 
   useEffect(() => {
     if (isAuthorized) {

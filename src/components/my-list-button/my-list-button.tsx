@@ -1,11 +1,12 @@
 import {useAppSelector} from '../../hooks/use-app-selector';
+import {getFilmsFavorite} from '../../store/films/selectors';
 
 type MyListButtonProps = {
   isFavorite: boolean;
 }
 
 function MyListButton({isFavorite}: MyListButtonProps) {
-  const films = useAppSelector((state) => state.filmsFavorite);
+  const films = useAppSelector(getFilmsFavorite);
 
   return (
     <button className="btn btn--list film-card__button" type="button">

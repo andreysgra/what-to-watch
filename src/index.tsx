@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {Provider} from 'react-redux';
 import store from './store';
-import {fetchFilmPromo, fetchFilms, fetchUserStatus} from './store/api-actions';
+import {fetchUserStatus} from './store/user/api-actions';
+import {fetchFilms} from './store/films/api-actions';
+import {fetchFilmPromo} from './store/film-promo/api-actions';
 
 store.dispatch(fetchUserStatus());
 store.dispatch(fetchFilms());

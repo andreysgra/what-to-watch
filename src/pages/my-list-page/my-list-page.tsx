@@ -4,10 +4,11 @@ import FilmsList from '../../components/films-list/films-list';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import Spinner from '../../components/spinner/spinner';
+import {getFilmsFavorite, getIsFilmsFavoriteLoading} from '../../store/films/selectors';
 
 function MyListPage() {
-  const films = useAppSelector((state) => state.filmsFavorite);
-  const isFilmsFavoriteLoading = useAppSelector((state) => state.isFilmsFavoriteLoading);
+  const films = useAppSelector(getFilmsFavorite);
+  const isFilmsFavoriteLoading = useAppSelector(getIsFilmsFavoriteLoading);
 
   if (isFilmsFavoriteLoading) {
     return <Spinner />;
