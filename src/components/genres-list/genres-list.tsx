@@ -4,6 +4,7 @@ import GenreItem from '../genre-item/genre-item';
 import {FILMS_PER_LOAD} from '../../const';
 import {getGenre} from '../../store/site-process/selectors';
 import {setFilmsCount, setGenre} from '../../store/site-process/slice';
+import {useCallback} from 'react';
 
 type GenresListProps = {
   genres: string[];
@@ -13,10 +14,11 @@ function GenresList({genres}: GenresListProps) {
   const activeGenre = useAppSelector(getGenre);
   const dispatch = useAppDispatch();
 
-  const handleItemClick = (genre: string) => {
-    dispatch(setGenre(genre));
-    dispatch(setFilmsCount(FILMS_PER_LOAD));
-  };
+  const handleItemClick = useCallback(
+    (genre: string) => {
+      dispatch(setGenre(genre));
+      dispatch(setFilmsCount(FILMS_PER_LOAD));
+    }, [dispatch]);
 
   return (
     <ul className="catalog__genres-list">

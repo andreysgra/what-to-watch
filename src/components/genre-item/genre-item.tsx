@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import {MouseEvent} from 'react';
+import {memo, MouseEvent} from 'react';
 
 type GenreItemProps = {
   genre: string;
@@ -7,7 +7,7 @@ type GenreItemProps = {
   onClick: (genre: string) => void;
 }
 
-function GenreItem({genre, isActive, onClick}: GenreItemProps) {
+function GenreItemElement({genre, isActive, onClick}: GenreItemProps) {
   const handleGenreLinkClick = (evt: MouseEvent<HTMLAnchorElement>) => {
     evt.preventDefault();
     onClick(genre);
@@ -21,5 +21,7 @@ function GenreItem({genre, isActive, onClick}: GenreItemProps) {
     </li>
   );
 }
+
+const GenreItem = memo(GenreItemElement);
 
 export default GenreItem;
