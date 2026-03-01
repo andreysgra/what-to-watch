@@ -27,17 +27,15 @@ function FilmPage(): React.JSX.Element | null {
 
   const dispatch = useAppDispatch();
 
-  const params = useParams();
+  const {id} = useParams();
 
   useEffect(() => {
-    const {id} = params;
-
     if (id) {
       dispatch(fetchFilm(id));
       dispatch(fetchComments(id));
       dispatch(fetchFilmsSimilar(id));
     }
-  }, [params, dispatch]);
+  }, [id, dispatch]);
 
   if (!film) {
     return null;
@@ -48,7 +46,6 @@ function FilmPage(): React.JSX.Element | null {
   }
 
   const {
-    id,
     name,
     isFavorite,
     genre,
@@ -58,7 +55,7 @@ function FilmPage(): React.JSX.Element | null {
     released
   } = film;
 
-  const link = AppRoute.AddReview.replace(RouteParam.Id, id);
+  const link = AppRoute.AddReview.replace(RouteParam.Id, film.id);
 
   return (
     <Fragment>
@@ -110,7 +107,7 @@ function FilmPage(): React.JSX.Element | null {
       </section>
 
       <div className="page-content">
-        <FilmsSimilar films={filmsSimilar} />
+        {filmsSimilar.length > 0 && <FilmsSimilar films={filmsSimilar} />}
         <PageFooter />
       </div>
     </Fragment>
