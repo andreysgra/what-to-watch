@@ -14,6 +14,7 @@ function FilmPromo() {
   }
 
   const {
+    id,
     name,
     posterImage,
     isFavorite,
@@ -58,7 +59,7 @@ function FilmPromo() {
                 </svg>
                 <span>Play</span>
               </button>
-              {isAuthorized && <MyListButton isFavorite={isFavorite} />}
+              {isAuthorized && <MyListButton id={id} isFavorite={isFavorite} />}
             </div>
           </div>
         </div>

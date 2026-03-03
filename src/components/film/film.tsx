@@ -76,7 +76,7 @@ function Film({id}: FilmProps) {
                 </svg>
                 <span>Play</span>
               </button>
-              <MyListButton isFavorite={isFavorite} />
+              <MyListButton id={id} isFavorite={isFavorite} />
               {isAuthorized && (
                 <Link className="btn film-card__button" to={link}>
                   Add review
