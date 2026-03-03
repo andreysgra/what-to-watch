@@ -1,8 +1,8 @@
 import {TFilmsFavoriteState} from './type';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {StoreSlice} from '../const';
-import {fetchFilmsFavorite} from './api-actions';
-import {TFilms} from '../../types/film';
+import {fetchFilmsFavorite, setFavorite} from './api-actions';
+import {TFilmFavorite, TFilms} from '../../types/film';
 
 const initialState: TFilmsFavoriteState = {
   filmsFavorite: [],
@@ -24,6 +24,14 @@ const filmsFavoriteSlice = createSlice({
       })
       .addCase(fetchFilmsFavorite.rejected, (state) => {
         state.isFilmsFavoriteLoading = false;
+      })
+      .addCase(setFavorite.fulfilled, (state, action: PayloadAction<TFilmFavorite>) => {
+        if (action.payload.isFavorite) {
+          state.filmsFavorite.push(action.payload);
+        } else {
+          state.filmsFavorite = state.filmsFavorite.filter((favoriteOffer) =>
+            favoriteOffer.id !== action.payload.id);
+        }
       });
   }
 });
