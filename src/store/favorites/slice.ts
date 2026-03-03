@@ -6,7 +6,8 @@ import {TFilmFavorite, TFilms} from '../../types/film';
 
 const initialState: TFilmsFavoriteState = {
   filmsFavorite: [],
-  isFilmsFavoriteLoading: false
+  isFilmsFavoriteLoading: false,
+  isStatusPending: false
 };
 
 const filmsFavoriteSlice = createSlice({
@@ -32,6 +33,14 @@ const filmsFavoriteSlice = createSlice({
           state.filmsFavorite = state.filmsFavorite.filter((favoriteOffer) =>
             favoriteOffer.id !== action.payload.id);
         }
+
+        state.isStatusPending = false;
+      })
+      .addCase(setFavorite.pending, (state) => {
+        state.isStatusPending = true;
+      })
+      .addCase(setFavorite.rejected, (state) => {
+        state.isStatusPending = false;
       });
   }
 });

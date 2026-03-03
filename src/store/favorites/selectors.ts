@@ -5,3 +5,6 @@ export const getFilmsFavorite = (state: State) => state[StoreSlice.Favorites].fi
 
 export const getIsFilmsFavoriteLoading =
   (state: State) => state[StoreSlice.Favorites].isFilmsFavoriteLoading;
+
+export const getIsStatusPending =
+  (state: State) => state[StoreSlice.Favorites].isStatusPending;

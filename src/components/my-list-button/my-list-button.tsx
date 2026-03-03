@@ -1,5 +1,5 @@
 import {useAppSelector} from '../../hooks/use-app-selector';
-import {getFilmsFavorite} from '../../store/favorites/selectors';
+import {getFilmsFavorite, getIsStatusPending} from '../../store/favorites/selectors';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {setFavorite} from '../../store/favorites/api-actions';
 import {FavoriteStatus} from '../../services/api/const';
@@ -12,6 +12,7 @@ type MyListButtonProps = {
 
 function MyListButton({id, isFavorite}: MyListButtonProps) {
   const films = useAppSelector(getFilmsFavorite);
+  const isStatusPending = useAppSelector(getIsStatusPending);
 
   const dispatch = useAppDispatch();
 
@@ -23,7 +24,12 @@ function MyListButton({id, isFavorite}: MyListButtonProps) {
   };
 
   return (
-    <button className="btn btn--list film-card__button" type="button" onClick={handleButtonClick}>
+    <button
+      className="btn btn--list film-card__button"
+      type="button"
+      disabled={isStatusPending}
+      onClick={handleButtonClick}
+    >
       {!isFavorite ? (
         <svg viewBox="0 0 19 20" width={19} height={20}>
           <use xlinkHref="#add"/>
