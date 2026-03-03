@@ -6,10 +6,12 @@ import filmsSlice from './films/slice';
 import filmPromoSlice from './film-promo/slice';
 import siteProcessSlice from './site-process/slice';
 import userSlice from './user/slice';
+import filmsFavoriteSlice from './favorites/slice';
 
 
 export const reducer = combineReducers({
   [StoreSlice.Comments]: commentsSlice.reducer,
+  [StoreSlice.Favorites]: filmsFavoriteSlice.reducer,
   [StoreSlice.Film]: filmSlice.reducer,
   [StoreSlice.FilmPromo]: filmPromoSlice.reducer,
   [StoreSlice.Films]: filmsSlice.reducer,

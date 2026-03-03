@@ -1,5 +1,6 @@
 export enum StoreSlice {
   Comments = 'comments',
+  Favorites = 'favorites',
   Films = 'films',
   Film = 'film',
   FilmPromo = 'film-promo',
