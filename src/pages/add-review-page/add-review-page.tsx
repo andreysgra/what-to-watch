@@ -15,21 +15,19 @@ function AddReviewPage() {
   const film = useAppSelector(getFilm);
 
   const dispatch = useAppDispatch();
-  const params = useParams();
+  const id = useParams().id as string;
 
   useEffect(() => {
-    const {id} = params;
-
     if (id) {
       dispatch(fetchFilm(id));
     }
-  }, [params, dispatch]);
+  }, [id, dispatch]);
 
   if (!film) {
     return null;
   }
 
-  const {id, name, backgroundImage, posterImage} = film;
+  const {name, backgroundImage, posterImage} = film;
   const link = AppRoute.Film.replace(RouteParam.Id, id);
 
   const handleFormSubmit = (formData: Omit<TReviewContent, 'id'>) => {
