@@ -4,7 +4,7 @@ import FilmsList from '../../components/films-list/films-list';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import Spinner from '../../components/spinner/spinner';
-import {getFilmsFavorite, getIsFilmsFavoriteLoading} from '../../store/films/selectors';
+import {getFilmsFavorite, getIsFilmsFavoriteLoading} from '../../store/favorites/selectors';
 
 function MyListPage() {
   const films = useAppSelector(getFilmsFavorite);

@@ -1,5 +1,5 @@
 import {useAppSelector} from '../../hooks/use-app-selector';
-import {getFilmsFavorite} from '../../store/films/selectors';
+import {getFilmsFavorite} from '../../store/favorites/selectors';
 
 type MyListButtonProps = {
   isFavorite: boolean;

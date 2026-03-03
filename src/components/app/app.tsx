@@ -15,7 +15,7 @@ import {useEffect} from 'react';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {AuthorizationStatus} from '../../services/api/const';
 import {getIsAuthorized} from '../../store/user/selectors';
-import {fetchFilmsFavorite} from '../../store/films/api-actions';
+import {fetchFilmsFavorite} from '../../store/favorites/api-actions';
 
 function App() {
   const isAuthorized = useAppSelector(getIsAuthorized);
