@@ -13,6 +13,7 @@ import {fetchFilm} from '../../store/film/api-actions';
 import {fetchComments} from '../../store/comments/api-actions';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {AppRoute, RouteParam} from '../../const';
+import PlayButton from '../play-button/play-button';
 
 type FilmProps = {
   id: string;
@@ -70,12 +71,7 @@ function Film({id}: FilmProps) {
               <span className="film-card__year">{released}</span>
             </p>
             <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button">
-                <svg viewBox="0 0 19 19" width={19} height={19}>
-                  <use xlinkHref="#play-s"/>
-                </svg>
-                <span>Play</span>
-              </button>
+              <PlayButton id={id} />
               <MyListButton id={id} isFavorite={isFavorite} />
               {isAuthorized && (
                 <Link className="btn film-card__button" to={link}>
