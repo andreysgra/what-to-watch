@@ -1,3 +1,5 @@
+import {FavoriteStatus} from '../services/api/const';
+
 export type TFilm = {
   id: string;
   name: string;
@@ -25,3 +27,9 @@ export type TFilmDetailed = TFilmPromo & {
   starring: string[];
   runTime: number;
 }
+export type TFilmFavorite = TFilmDetailed & {
+  previewImage: string;
+  previewVideoLink: string;
+}
+
+export type TFavoriteStatus = Pick<TFilm, 'id'> & {status: FavoriteStatus};

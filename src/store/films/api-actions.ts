@@ -21,12 +21,3 @@ export const fetchFilmsSimilar = createAsyncThunk<TFilms, TFilm['id'], {extra: A
     return data;
   }
 );
-
-export const fetchFilmsFavorite = createAsyncThunk<TFilms, undefined, {extra: AxiosInstance}>(
-  `${StoreSlice.Films}/fetch-favorite`,
-  async (_, {extra: api}) => {
-    const {data} = await api.get<TFilms>(ApiRoute.Favorite);
-
-    return data;
-  }
-);

@@ -4,6 +4,7 @@ import UserNavigation from '../user-navigation/user-navigation';
 import MyListButton from '../my-list-button/my-list-button';
 import {getIsAuthorized} from '../../store/user/selectors';
 import {getFilmPromo} from '../../store/film-promo/selectors';
+import PlayButton from '../play-button/play-button';
 
 function FilmPromo() {
   const filmPromo = useAppSelector(getFilmPromo);
@@ -14,6 +15,7 @@ function FilmPromo() {
   }
 
   const {
+    id,
     name,
     posterImage,
     isFavorite,
@@ -52,13 +54,8 @@ function FilmPromo() {
               <span className="film-card__year">{released}</span>
             </p>
             <div className="film-card__buttons">
-              <button className="btn btn--play film-card__button" type="button">
-                <svg viewBox="0 0 19 19" width={19} height={19}>
-                  <use xlinkHref="#play-s" />
-                </svg>
-                <span>Play</span>
-              </button>
-              {isAuthorized && <MyListButton isFavorite={isFavorite} />}
+              <PlayButton id={id} />
+              {isAuthorized && <MyListButton id={id} isFavorite={isFavorite} />}
             </div>
           </div>
         </div>
