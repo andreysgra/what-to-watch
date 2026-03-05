@@ -1,37 +1,34 @@
+import {useParams} from 'react-router-dom';
+import {useAppDispatch} from '../../hooks/use-app-dispatch';
+import {useAppSelector} from '../../hooks/use-app-selector';
+import {getFilm, getIsFilmLoading} from '../../store/film/selectors';
+import Spinner from '../../components/spinner/spinner';
+import {useEffect} from 'react';
+import {fetchFilm} from '../../store/film/api-actions';
+import Player from '../../components/player/player';
+
 function PlayerPage() {
+  const film = useAppSelector(getFilm);
+  const isFilmLoading = useAppSelector(getIsFilmLoading);
+
+  const id = useParams().id as string;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFilm(id));
+  }, [id, dispatch]);
+
+  if (!film) {
+    return null;
+  }
+
+  if (isFilmLoading) {
+    return <Spinner />;
+  }
+
   return (
-    <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg" />
-      <button type="button" className="player__exit">
-        Exit
-      </button>
-      <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress className="player__progress" value={30} max={100} />
-            <div className="player__toggler" style={{ left: '30%' }}>
-              Toggler
-            </div>
-          </div>
-          <div className="player__time-value">1:30:29</div>
-        </div>
-        <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width={19} height={19}>
-              <use xlinkHref="#play-s" />
-            </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">Trainspotting</div>
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width={27} height={27}>
-              <use xlinkHref="#full-screen" />
-            </svg>
-            <span>Full screen</span>
-          </button>
-        </div>
-      </div>
-    </div>
+    <Player film={film} />
   );
 }
 
