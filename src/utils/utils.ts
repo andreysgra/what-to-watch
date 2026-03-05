@@ -7,6 +7,18 @@ export const getFormattedRunTime = (runtime: number): string => {
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
+export const getFormattedDuration = (runtime: number): string => {
+  const hours = Math.floor(runtime / 3600);
+  const minutes = Math.floor((runtime % 3600) / 60);
+  const seconds = runtime % 60;
+
+  const formattedHours = hours ? `${hours.toString().padStart(2, '0')}:` : '';
+  const formattedMinutes = `${minutes.toString().padStart(2, '0')}:`;
+  const formattedSeconds = `${seconds.toString().padStart(2, '0')}`;
+
+  return `${formattedHours}${formattedMinutes}${formattedSeconds}`;
+};
+
 export const getStarringShortList = (starring: string[]): string => {
   const shortStarring = starring.slice(0, MAX_STARRING_COUNT).join(', ');
 
