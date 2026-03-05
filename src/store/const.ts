@@ -5,5 +5,6 @@ export enum StoreSlice {
   Film = 'film',
   FilmPromo = 'film-promo',
   SiteProcess = 'site-process',
-  User = 'user'
+  User = 'user',
+  VideoPlayer = 'video-player'
 }
