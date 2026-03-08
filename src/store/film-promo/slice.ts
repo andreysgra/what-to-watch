@@ -28,7 +28,7 @@ const filmPromoSlice = createSlice({
         state.isFilmPromoLoading = false;
       })
       .addCase(setFavorite.fulfilled, (state, action: PayloadAction<TFilmFavorite>) => {
-        if (state.filmPromo && state.filmPromo.id === action.payload.id) {
+        if (state.filmPromo?.id === action.payload.id) {
           state.filmPromo.isFavorite = action.payload.isFavorite;
         }
       });
