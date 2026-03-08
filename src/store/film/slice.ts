@@ -24,10 +24,11 @@ const filmSlice = createSlice({
         state.isFilmLoading = true;
       })
       .addCase(fetchFilm.rejected, (state) => {
+        state.film = null;
         state.isFilmLoading = false;
       })
       .addCase(setFavorite.fulfilled, (state, action: PayloadAction<TFilmFavorite>) => {
-        if (state.film && state.film.id === action.payload.id) {
+        if (state.film?.id === action.payload.id) {
           state.film.isFavorite = action.payload.isFavorite;
         }
       });

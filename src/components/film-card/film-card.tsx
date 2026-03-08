@@ -2,7 +2,7 @@ import {TFilm} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {AppRoute, DELAY_BEFORE_PLAY_VIDEO, RouteParam} from '../../const';
 import VideoPlayer from '../video-player/video-player';
-import {useEffect, useRef} from 'react';
+import {memo, useEffect, useRef} from 'react';
 
 type FilmCardProps = {
   film: TFilm;
@@ -11,7 +11,7 @@ type FilmCardProps = {
   onMouseLeave: () => void;
 }
 
-function FilmCard({film, filmCurrentId, onMouseEnter, onMouseLeave}: FilmCardProps) {
+function FilmCardElement({film, filmCurrentId, onMouseEnter, onMouseLeave}: FilmCardProps) {
   const {id, name, previewImage, previewVideoLink} = film;
   const link = AppRoute.Film.replace(RouteParam.Id, id);
 
@@ -58,5 +58,9 @@ function FilmCard({film, filmCurrentId, onMouseEnter, onMouseLeave}: FilmCardPro
     </article>
   );
 }
+
+const FilmCard = memo(FilmCardElement, (prevProps, nextProps) =>
+  prevProps.film.id === nextProps.film.id
+);
 
 export default FilmCard;

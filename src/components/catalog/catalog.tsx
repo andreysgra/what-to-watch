@@ -32,7 +32,7 @@ function Catalog() {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
-      <GenresList genres={genres} />
+      {filmsByGenre.length > 0 && (<GenresList genres={genres}/>)}
       <FilmsList films={filmsByGenre.slice(0, displayedFilms)} />
       {filmsByGenre.length > displayedFilms && (
         <div className="catalog__more">

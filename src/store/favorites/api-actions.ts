@@ -1,10 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {TFavoriteStatus, TFilmFavorite, TFilms} from '../../types/film';
-import {AxiosError, AxiosInstance} from 'axios';
+import {AxiosError, AxiosInstance, HttpStatusCode} from 'axios';
 import {StoreSlice} from '../const';
 import {ApiRoute} from '../../services/api/api-route';
 import {AppDispatch} from '../../types/state';
-import {HttpCode} from '../../services/api/http-code';
 import {AppRoute} from '../../const';
 import {redirectToRoute} from '../action';
 
@@ -30,7 +29,7 @@ export const setFavorite = createAsyncThunk<TFilmFavorite, TFavoriteStatus, {
     } catch (error) {
       const axiosError = error as AxiosError;
 
-      if (axiosError.response?.status === HttpCode.NoAuth) {
+      if (axiosError.response?.status === HttpStatusCode.Unauthorized) {
         dispatch(redirectToRoute(AppRoute.Login));
       }
 

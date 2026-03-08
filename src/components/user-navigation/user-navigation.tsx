@@ -22,8 +22,8 @@ function UserNavigation() {
       (
         <ul className="user-block">
           <li className="user-block__item">
-            <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}} title={user.name}>
-              <img src={user.avatarUrl} alt={`${user.name} avatar`} width={63} height={63} />
+            <Link className="user-block__avatar" to={AppRoute.MyList} style={{display: 'block'}} title={user?.name}>
+              <img src={user?.avatarUrl} alt={`${user?.name} avatar`} width={63} height={63} />
             </Link>
           </li>
           <li className="user-block__item">

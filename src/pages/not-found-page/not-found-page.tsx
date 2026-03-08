@@ -14,7 +14,7 @@ function NotFoundPage() {
 
       <div className="sign-in user-page__content">
         <section className="not-found">
-          <h2 className="not-found__text">Page not found</h2>
+          <h2 className="not-found__title">Page not found</h2>
           <p className="not-found__description">
             The page you are looking for does not exist or has been moved.
           </p>

@@ -14,6 +14,7 @@ import {fetchComments} from '../../store/comments/api-actions';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {AppRoute, RouteParam} from '../../const';
 import PlayButton from '../play-button/play-button';
+import ErrorMessage from '../error-message/error-message';
 
 type FilmProps = {
   id: string;
@@ -32,12 +33,12 @@ function Film({id}: FilmProps) {
     dispatch(fetchComments(id));
   }, [id, dispatch]);
 
-  if (!film) {
-    return null;
-  }
-
   if (isFilmLoading) {
     return <Spinner />;
+  }
+
+  if (!film) {
+    return <ErrorMessage />;
   }
 
   const {
