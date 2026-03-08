@@ -28,6 +28,9 @@ const filmsSlice = createSlice({
       })
       .addCase(fetchFilmsSimilar.fulfilled, (state, action: PayloadAction<TFilms>) => {
         state.filmsSimilar = action.payload;
+      })
+      .addCase(fetchFilmsSimilar.rejected, (state) => {
+        state.filmsSimilar = [];
       });
   }
 });
