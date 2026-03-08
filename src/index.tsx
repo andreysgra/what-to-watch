@@ -6,6 +6,7 @@ import store from './store';
 import {fetchUserStatus} from './store/user/api-actions';
 import {fetchFilms} from './store/films/api-actions';
 import {fetchFilmPromo} from './store/film-promo/api-actions';
+import {ToastContainer} from 'react-toastify';
 
 store.dispatch(fetchUserStatus());
 store.dispatch(fetchFilms());
@@ -18,6 +19,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>
