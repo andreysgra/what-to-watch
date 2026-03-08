@@ -3,5 +3,5 @@ import {TUser} from '../../types/user';
 
 export type TUserState = {
   authorizationStatus: AuthorizationStatus;
-  user: Pick<TUser, 'name' | 'avatarUrl'>;
+  user: TUser | null;
 }

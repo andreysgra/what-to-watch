@@ -7,10 +7,7 @@ import {TUser} from '../../types/user';
 
 const initialState: TUserState = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  user: {
-    name: '',
-    avatarUrl: ''
-  }
+  user: null
 };
 
 const userSlice = createSlice({
@@ -31,7 +28,7 @@ const userSlice = createSlice({
         state.authorizationStatus = AuthorizationStatus.Auth;
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.user = {name: '', avatarUrl: ''};
+        state.user = null;
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       });
   }
