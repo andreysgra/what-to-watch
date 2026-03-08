@@ -3,15 +3,22 @@ import Logo from '../logo/logo';
 import UserNavigation from '../user-navigation/user-navigation';
 import MyListButton from '../my-list-button/my-list-button';
 import {getIsAuthorized} from '../../store/user/selectors';
-import {getFilmPromo} from '../../store/film-promo/selectors';
+import {getFilmPromo, getIsFilmPromoLoading} from '../../store/film-promo/selectors';
 import PlayButton from '../play-button/play-button';
+import ErrorMessage from '../error-message/error-message';
+import Spinner from '../spinner/spinner';
 
 function FilmPromo() {
   const filmPromo = useAppSelector(getFilmPromo);
   const isAuthorized = useAppSelector(getIsAuthorized);
+  const isFilmPromoLoading = useAppSelector(getIsFilmPromoLoading);
+
+  if (isFilmPromoLoading) {
+    return <Spinner />;
+  }
 
   if (!filmPromo) {
-    return null;
+    return <ErrorMessage />;
   }
 
   const {

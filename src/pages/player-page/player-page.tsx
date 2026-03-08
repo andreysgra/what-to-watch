@@ -6,6 +6,7 @@ import Spinner from '../../components/spinner/spinner';
 import {useEffect} from 'react';
 import {fetchFilm} from '../../store/film/api-actions';
 import Player from '../../components/player/player';
+import ErrorMessage from '../../components/error-message/error-message';
 
 function PlayerPage() {
   const film = useAppSelector(getFilm);
@@ -20,7 +21,7 @@ function PlayerPage() {
   }, [id, dispatch]);
 
   if (!film) {
-    return null;
+    return <ErrorMessage />;
   }
 
   if (isFilmLoading) {

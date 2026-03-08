@@ -10,6 +10,7 @@ import {useEffect} from 'react';
 import {fetchFilm} from '../../store/film/api-actions';
 import {getFilm} from '../../store/film/selectors';
 import {postComment} from '../../store/comments/api-actions';
+import ErrorMessage from '../../components/error-message/error-message';
 
 function AddReviewPage() {
   const film = useAppSelector(getFilm);
@@ -24,7 +25,7 @@ function AddReviewPage() {
   }, [id, dispatch]);
 
   if (!film) {
-    return null;
+    return <ErrorMessage />;
   }
 
   const {name, backgroundImage, posterImage} = film;
