@@ -1,7 +1,6 @@
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import UserNavigation from '../../components/user-navigation/user-navigation';
-import {TReviewContent} from '../../types/review';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {Link, useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/use-app-selector';
@@ -9,7 +8,6 @@ import {AppRoute, RouteParam} from '../../const';
 import {useEffect} from 'react';
 import {fetchFilm} from '../../store/film/api-actions';
 import {getFilm} from '../../store/film/selectors';
-import {postComment} from '../../store/comments/api-actions';
 import ErrorMessage from '../../components/error-message/error-message';
 
 function AddReviewPage() {
@@ -30,10 +28,6 @@ function AddReviewPage() {
 
   const {name, backgroundImage, posterImage} = film;
   const link = AppRoute.Film.replace(RouteParam.Id, id);
-
-  const handleFormSubmit = (formData: Omit<TReviewContent, 'id'>) => {
-    dispatch(postComment({id, ...formData}));
-  };
 
   return (
     <section className="film-card film-card--full">
@@ -71,7 +65,7 @@ function AddReviewPage() {
         </div>
       </div>
       <div className="add-review">
-        <ReviewForm onSubmit={handleFormSubmit} />
+        <ReviewForm id={id} />
       </div>
     </section>
   );

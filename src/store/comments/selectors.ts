@@ -4,7 +4,7 @@ import {RequestStatus} from '../../services/api/const';
 
 const storeSlice = StoreSlice.Comments;
 
-export const getComments = (state: State) => state[StoreSlice.Comments].comments;
+export const getComments = (state: State) => state[storeSlice].comments;
 
 export const getIsCommentSubmitSuccess =
   (state: State)=> state[storeSlice].submitStatus === RequestStatus.Success;

@@ -27,11 +27,11 @@ export enum FilmTabName {
 }
 
 export enum SuccessMessage {
-  ReviewSubmit = 'Thank you for your feedback'
+  ReviewSubmit = 'Thank you for your review'
 }
 
 export enum ErrorMessage {
-  ReviewSubmit = 'An error occurred, please try sending again.'
+  ReviewSubmit = 'An error occurred, please try sending again'
 }
 
 export const FilmRatingMinThreshold = {
