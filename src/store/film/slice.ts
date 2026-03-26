@@ -4,10 +4,11 @@ import {StoreSlice} from '../const';
 import {fetchFilm} from './api-actions';
 import {TFilmDetailed, TFilmFavorite} from '../../types/film';
 import {setFavorite} from '../favorites/api-actions';
+import {RequestStatus} from '../../services/api/const';
 
 const initialState: TFilmState = {
   film: null,
-  isFilmLoading: false
+  loadingStatus: RequestStatus.Idle
 };
 
 const filmSlice = createSlice({
@@ -18,14 +19,14 @@ const filmSlice = createSlice({
     builder
       .addCase(fetchFilm.fulfilled, (state, action: PayloadAction<TFilmDetailed>) => {
         state.film = action.payload;
-        state.isFilmLoading = false;
+        state.loadingStatus = RequestStatus.Success;
       })
       .addCase(fetchFilm.pending, (state) => {
-        state.isFilmLoading = true;
+        state.loadingStatus = RequestStatus.Pending;
       })
       .addCase(fetchFilm.rejected, (state) => {
         state.film = null;
-        state.isFilmLoading = false;
+        state.loadingStatus = RequestStatus.Error;
       })
       .addCase(setFavorite.fulfilled, (state, action: PayloadAction<TFilmFavorite>) => {
         if (state.film?.id === action.payload.id) {

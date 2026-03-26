@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import FilmDescription from '../film-description/film-description';
 import {useEffect} from 'react';
 import {useAppSelector} from '../../hooks/use-app-selector';
-import {getFilm, getIsFilmLoading} from '../../store/film/selectors';
+import {getFilm, getIsFilmFailed, getIsFilmLoading} from '../../store/film/selectors';
 import {getComments} from '../../store/comments/selectors';
 import {getIsAuthorized} from '../../store/user/selectors';
 import Spinner from '../spinner/spinner';
@@ -23,6 +23,7 @@ type FilmProps = {
 function Film({id}: FilmProps) {
   const film = useAppSelector(getFilm);
   const isFilmLoading = useAppSelector(getIsFilmLoading);
+  const isFilmFailed = useAppSelector(getIsFilmFailed);
   const comments = useAppSelector(getComments);
   const isAuthorized = useAppSelector(getIsAuthorized);
 
@@ -37,7 +38,7 @@ function Film({id}: FilmProps) {
     return <Spinner />;
   }
 
-  if (!film) {
+  if (isFilmFailed || !film) {
     return <ErrorMessage />;
   }
 
