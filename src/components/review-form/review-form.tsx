@@ -1,10 +1,14 @@
-import {CommentLength, STARS_COUNT} from '../../const';
+import {CommentLength, ErrorMessage, STARS_COUNT, SuccessMessage} from '../../const';
 import RatingStar from '../../components/rating-star/rating-star';
 import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {TReviewContent} from '../../types/review';
 import {useAppSelector} from '../../hooks/use-app-selector';
-import {SubmitStatus} from '../../services/api/const';
-import {getCommentStatus} from '../../store/comments/selectors';
+import {
+  getIsCommentSubmitFailed,
+  getIsCommentSubmitSuccess,
+  getIsCommentSubmitting
+} from '../../store/comments/selectors';
+import {toast} from 'react-toastify';
 
 type ReviewFormProps = {
   onSubmit: (formData: Omit<TReviewContent,'id'>) => void;
@@ -14,16 +18,22 @@ function ReviewForm({onSubmit}: ReviewFormProps) {
   const [rating, setRating] = useState<number>(0);
   const [text, setText] = useState<string>('');
 
-  const submitStatus = useAppSelector(getCommentStatus);
-
-  const isSubmitting = submitStatus === SubmitStatus.Pending;
+  const isSubmitting = useAppSelector(getIsCommentSubmitting);
+  const isSubmitSuccess = useAppSelector(getIsCommentSubmitSuccess);
+  const isSubmitFailed = useAppSelector(getIsCommentSubmitFailed);
 
   useEffect(() => {
-    if (submitStatus === SubmitStatus.Fulfilled) {
+    if (isSubmitSuccess) {
+      toast.success(SuccessMessage.ReviewSubmit);
+
       setRating(0);
       setText('');
     }
-  }, [submitStatus]);
+
+    if (isSubmitFailed) {
+      toast.error(ErrorMessage.ReviewSubmit);
+    }
+  }, [isSubmitSuccess, isSubmitFailed]);
 
   const handleRadioChange = (evt: ChangeEvent<HTMLInputElement>) =>
     setRating(Number(evt.target.value));
