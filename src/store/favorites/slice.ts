@@ -3,11 +3,12 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {StoreSlice} from '../const';
 import {fetchFilmsFavorite, setFavorite} from './api-actions';
 import {TFilmFavorite, TFilms} from '../../types/film';
+import {RequestStatus} from '../../services/api/const';
 
 const initialState: TFilmsFavoriteState = {
   filmsFavorite: [],
-  isFilmsFavoriteLoading: false,
-  isStatusPending: false
+  addingStatus: RequestStatus.Idle,
+  loadingStatus: RequestStatus.Idle
 };
 
 const filmsFavoriteSlice = createSlice({
@@ -18,13 +19,13 @@ const filmsFavoriteSlice = createSlice({
     builder
       .addCase(fetchFilmsFavorite.fulfilled, (state, action: PayloadAction<TFilms>) => {
         state.filmsFavorite = action.payload;
-        state.isFilmsFavoriteLoading = false;
+        state.loadingStatus = RequestStatus.Success;
       })
       .addCase(fetchFilmsFavorite.pending, (state) => {
-        state.isFilmsFavoriteLoading = true;
+        state.loadingStatus = RequestStatus.Pending;
       })
       .addCase(fetchFilmsFavorite.rejected, (state) => {
-        state.isFilmsFavoriteLoading = false;
+        state.loadingStatus = RequestStatus.Error;
       })
       .addCase(setFavorite.fulfilled, (state, action: PayloadAction<TFilmFavorite>) => {
         if (action.payload.isFavorite) {
@@ -34,13 +35,13 @@ const filmsFavoriteSlice = createSlice({
             favoriteOffer.id !== action.payload.id);
         }
 
-        state.isStatusPending = false;
+        state.addingStatus = RequestStatus.Success;
       })
       .addCase(setFavorite.pending, (state) => {
-        state.isStatusPending = true;
+        state.addingStatus = RequestStatus.Pending;
       })
       .addCase(setFavorite.rejected, (state) => {
-        state.isStatusPending = false;
+        state.addingStatus = RequestStatus.Error;
       });
   }
 });

@@ -3,7 +3,7 @@ import Logo from '../logo/logo';
 import UserNavigation from '../user-navigation/user-navigation';
 import MyListButton from '../my-list-button/my-list-button';
 import {getIsAuthorized} from '../../store/user/selectors';
-import {getFilmPromo, getIsFilmPromoLoading} from '../../store/film-promo/selectors';
+import {getFilmPromo, getIsFilmPromoFailed, getIsFilmPromoLoading} from '../../store/film-promo/selectors';
 import PlayButton from '../play-button/play-button';
 import ErrorMessage from '../error-message/error-message';
 import Spinner from '../spinner/spinner';
@@ -12,12 +12,13 @@ function FilmPromo() {
   const filmPromo = useAppSelector(getFilmPromo);
   const isAuthorized = useAppSelector(getIsAuthorized);
   const isFilmPromoLoading = useAppSelector(getIsFilmPromoLoading);
+  const isFilmPromoFailed = useAppSelector(getIsFilmPromoFailed);
 
   if (isFilmPromoLoading) {
     return <Spinner />;
   }
 
-  if (!filmPromo) {
+  if (isFilmPromoFailed || !filmPromo) {
     return <ErrorMessage />;
   }
 

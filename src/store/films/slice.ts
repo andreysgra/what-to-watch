@@ -3,11 +3,12 @@ import {StoreSlice} from '../const';
 import {TFilmsState} from './type';
 import {fetchFilms, fetchFilmsSimilar} from './api-actions';
 import {TFilms} from '../../types/film';
+import {RequestStatus} from '../../services/api/const';
 
 const initialState: TFilmsState = {
   films: [],
   filmsSimilar: [],
-  isFilmsLoading: false
+  loadingStatus: RequestStatus.Idle
 };
 
 const filmsSlice = createSlice({
@@ -18,13 +19,13 @@ const filmsSlice = createSlice({
     builder
       .addCase(fetchFilms.fulfilled, (state, action: PayloadAction<TFilms>) => {
         state.films = action.payload;
-        state.isFilmsLoading = false;
+        state.loadingStatus = RequestStatus.Success;
       })
       .addCase(fetchFilms.pending, (state) => {
-        state.isFilmsLoading = true;
+        state.loadingStatus = RequestStatus.Pending;
       })
       .addCase(fetchFilms.rejected, (state) => {
-        state.isFilmsLoading = false;
+        state.loadingStatus = RequestStatus.Error;
       })
       .addCase(fetchFilmsSimilar.fulfilled, (state, action: PayloadAction<TFilms>) => {
         state.filmsSimilar = action.payload;

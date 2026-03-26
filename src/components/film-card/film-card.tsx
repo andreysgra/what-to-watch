@@ -2,24 +2,27 @@ import {TFilm} from '../../types/film';
 import {Link} from 'react-router-dom';
 import {AppRoute, DELAY_BEFORE_PLAY_VIDEO, RouteParam} from '../../const';
 import VideoPlayer from '../video-player/video-player';
-import {memo, useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 type FilmCardProps = {
   film: TFilm;
-  filmCurrentId?: string | null;
-  onMouseEnter: (id: string) => void;
-  onMouseLeave: () => void;
 }
 
-function FilmCardElement({film, filmCurrentId, onMouseEnter, onMouseLeave}: FilmCardProps) {
+function FilmCard({film}: FilmCardProps) {
+  const [filmCurrentId, setFilmCurrentId] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
   const {id, name, previewImage, previewVideoLink} = film;
   const link = AppRoute.Film.replace(RouteParam.Id, id);
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const handleMouseEnter = () => onMouseEnter(id);
+  const handleMouseEnter = () => {
+    setFilmCurrentId(id);
+  };
 
-  const handleMouseLeave = () => onMouseLeave();
+  const handleMouseLeave = () => {
+    setFilmCurrentId(null);
+  };
 
   useEffect(() => {
     if (filmCurrentId !== id || !videoRef.current) {
@@ -58,9 +61,5 @@ function FilmCardElement({film, filmCurrentId, onMouseEnter, onMouseLeave}: Film
     </article>
   );
 }
-
-const FilmCard = memo(FilmCardElement, (prevProps, nextProps) =>
-  prevProps.film.id === nextProps.film.id
-);
 
 export default FilmCard;

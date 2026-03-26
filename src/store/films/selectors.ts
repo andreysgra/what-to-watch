@@ -1,8 +1,12 @@
 import {State} from '../../types/state';
 import {StoreSlice} from '../const';
+import {RequestStatus} from '../../services/api/const';
 
-export const getFilms = (state: State) => state[StoreSlice.Films].films;
+const storeSlice = StoreSlice.Films;
 
-export const getFilmsSimilar = (state: State) => state[StoreSlice.Films].filmsSimilar;
+export const getFilms = (state: State) => state[storeSlice].films;
 
-export const getIsFilmsLoading = (state: State) => state[StoreSlice.Films].isFilmsLoading;
+export const getFilmsSimilar = (state: State) => state[storeSlice].filmsSimilar;
+
+export const getIsFilmsLoading = (state: State) =>
+  state[storeSlice].loadingStatus === RequestStatus.Pending;

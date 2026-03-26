@@ -1,7 +1,8 @@
 import {TFilms} from '../../types/film';
+import {RequestStatus} from '../../services/api/const';
 
 export type TFilmsFavoriteState = {
   filmsFavorite: TFilms;
-  isFilmsFavoriteLoading: boolean;
-  isStatusPending: boolean;
+  addingStatus: RequestStatus;
+  loadingStatus: RequestStatus;
 }

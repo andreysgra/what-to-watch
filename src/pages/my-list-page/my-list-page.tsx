@@ -4,14 +4,20 @@ import FilmsList from '../../components/films-list/films-list';
 import UserNavigation from '../../components/user-navigation/user-navigation';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import Spinner from '../../components/spinner/spinner';
-import {getFilmsFavorite, getIsFilmsFavoriteLoading} from '../../store/favorites/selectors';
+import {getFilmsFavorite, getIsFavoritesFailed, getIsFavoritesLoading} from '../../store/favorites/selectors';
+import ErrorMessage from '../../components/error-message/error-message';
 
 function MyListPage() {
   const films = useAppSelector(getFilmsFavorite);
-  const isFilmsFavoriteLoading = useAppSelector(getIsFilmsFavoriteLoading);
+  const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
+  const isFavoritesFailed = useAppSelector(getIsFavoritesFailed);
 
-  if (isFilmsFavoriteLoading) {
+  if (isFavoritesLoading) {
     return <Spinner />;
+  }
+
+  if (isFavoritesFailed) {
+    return <ErrorMessage />;
   }
 
   return (

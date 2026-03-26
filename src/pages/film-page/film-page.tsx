@@ -9,10 +9,10 @@ function FilmPage() {
 
   return (
     <Fragment>
-      <Film id={id}/>
+      <Film id={id} />
       <div className="page-content">
-        <FilmsSimilar id={id}/>
-        <PageFooter/>
+        <FilmsSimilar id={id} />
+        <PageFooter />
       </div>
     </Fragment>
   );

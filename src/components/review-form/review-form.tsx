@@ -1,44 +1,60 @@
-import {CommentLength, STARS_COUNT} from '../../const';
+import {CommentLength, ErrorMessage, STARS_COUNT, SuccessMessage} from '../../const';
 import RatingStar from '../../components/rating-star/rating-star';
 import {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {TReviewContent} from '../../types/review';
 import {useAppSelector} from '../../hooks/use-app-selector';
-import {SubmitStatus} from '../../services/api/const';
-import {getCommentStatus} from '../../store/comments/selectors';
+import {
+  getIsCommentSubmitFailed,
+  getIsCommentSubmitSuccess,
+  getIsCommentSubmitting
+} from '../../store/comments/selectors';
+import {toast} from 'react-toastify';
+import {TFilm} from '../../types/film';
+import {postComment} from '../../store/comments/api-actions';
+import {useAppDispatch} from '../../hooks/use-app-dispatch';
 
 type ReviewFormProps = {
-  onSubmit: (formData: Omit<TReviewContent,'id'>) => void;
+  id: TFilm['id'];
 }
 
-function ReviewForm({onSubmit}: ReviewFormProps) {
+function ReviewForm({id}: ReviewFormProps) {
   const [rating, setRating] = useState<number>(0);
-  const [text, setText] = useState<string>('');
+  const [comment, setComment] = useState<string>('');
 
-  const submitStatus = useAppSelector(getCommentStatus);
+  const isSubmitting = useAppSelector(getIsCommentSubmitting);
+  const isSubmitSuccess = useAppSelector(getIsCommentSubmitSuccess);
+  const isSubmitFailed = useAppSelector(getIsCommentSubmitFailed);
 
-  const isSubmitting = submitStatus === SubmitStatus.Pending;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (submitStatus === SubmitStatus.Fulfilled) {
+    if (isSubmitSuccess) {
+      toast.success(SuccessMessage.ReviewSubmit);
+
       setRating(0);
-      setText('');
+      setComment('');
     }
-  }, [submitStatus]);
+
+    if (isSubmitFailed) {
+      toast.error(ErrorMessage.ReviewSubmit);
+    }
+  }, [isSubmitSuccess, isSubmitFailed]);
 
   const handleRadioChange = (evt: ChangeEvent<HTMLInputElement>) =>
     setRating(Number(evt.target.value));
 
   const handleTextAreaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setText(evt.target.value);
+    setComment(evt.target.value);
   };
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    onSubmit({comment: text, rating});
+    dispatch(postComment({id, comment, rating} as TReviewContent));
   };
 
-  const isDisabled = isSubmitting || !rating || (text.length < CommentLength.Min || text.length > CommentLength.Max);
+  const isDisabled = isSubmitting || !rating ||
+    (comment.length < CommentLength.Min || comment.length > CommentLength.Max);
 
   return (
     <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
@@ -60,7 +76,7 @@ function ReviewForm({onSubmit}: ReviewFormProps) {
           name="review-text"
           id="review-text"
           placeholder="Review text"
-          value={text}
+          value={comment}
           onChange={handleTextAreaChange}
         />
         <div className="add-review__submit">

@@ -17,13 +17,12 @@ function Catalog() {
 
   const dispatch = useAppDispatch();
 
-
   const genres = [ALL_GENRES, ...Object.keys(filmsGroupedByGenre)
     .slice(0, MAX_GENRES_COUNT)
     .sort()];
 
-
-  const handleShowMoreButtonClick = () => dispatch(setFilmsCount(displayedFilms + FILMS_PER_LOAD));
+  const handleShowMoreButtonClick = () =>
+    dispatch(setFilmsCount(displayedFilms + FILMS_PER_LOAD));
 
   if (isFilmsLoading) {
     return <Spinner />;
@@ -32,7 +31,7 @@ function Catalog() {
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
-      {filmsByGenre.length > 0 && (<GenresList genres={genres}/>)}
+      {filmsByGenre.length > 0 && (<GenresList genres={genres} />)}
       <FilmsList films={filmsByGenre.slice(0, displayedFilms)} />
       {filmsByGenre.length > displayedFilms && (
         <div className="catalog__more">
