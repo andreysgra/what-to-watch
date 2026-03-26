@@ -1,10 +1,16 @@
 import {State} from '../../types/state';
 import {StoreSlice} from '../const';
+import {RequestStatus} from '../../services/api/const';
 
-export const getFilmsFavorite = (state: State) => state[StoreSlice.Favorites].filmsFavorite;
+const storeSlice = StoreSlice.Favorites;
 
-export const getIsFilmsFavoriteLoading =
-  (state: State) => state[StoreSlice.Favorites].isFilmsFavoriteLoading;
+export const getFilmsFavorite = (state: State) => state[storeSlice].filmsFavorite;
 
-export const getIsStatusPending =
-  (state: State) => state[StoreSlice.Favorites].isStatusPending;
+export const getIsFavoritesLoading = (state: State)=>
+  state[storeSlice].loadingStatus === RequestStatus.Pending;
+
+export const getIsFavoritesFailed = (state: State)=>
+  state[storeSlice].loadingStatus === RequestStatus.Error;
+
+export const getIsFavoriteAdding = (state: State)=>
+  state[storeSlice].addingStatus === RequestStatus.Pending;

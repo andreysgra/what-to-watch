@@ -1,5 +1,5 @@
 import {useAppSelector} from '../../hooks/use-app-selector';
-import {getFilmsFavorite, getIsStatusPending} from '../../store/favorites/selectors';
+import {getFilmsFavorite, getIsFavoriteAdding} from '../../store/favorites/selectors';
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {setFavorite} from '../../store/favorites/api-actions';
 import {FavoriteStatus} from '../../services/api/const';
@@ -12,22 +12,24 @@ type MyListButtonProps = {
 
 function MyListButton({id, isFavorite}: MyListButtonProps) {
   const films = useAppSelector(getFilmsFavorite);
-  const isStatusPending = useAppSelector(getIsStatusPending);
+  const isFavoriteAdding = useAppSelector(getIsFavoriteAdding);
 
   const dispatch = useAppDispatch();
 
   const handleButtonClick = () => {
-    dispatch(setFavorite({
-      id,
-      status: isFavorite ? FavoriteStatus.Off : FavoriteStatus.On
-    }));
+    dispatch(setFavorite(
+      {
+        id,
+        status: isFavorite ? FavoriteStatus.Off : FavoriteStatus.On
+      }
+    ));
   };
 
   return (
     <button
       className="btn btn--list film-card__button"
       type="button"
-      disabled={isStatusPending}
+      disabled={isFavoriteAdding}
       onClick={handleButtonClick}
     >
       {!isFavorite ? (
