@@ -16,6 +16,7 @@ import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {AuthorizationStatus} from '../../services/api/const';
 import {getIsAuthorized} from '../../store/user/selectors';
 import {fetchFilmsFavorite} from '../../store/favorites/api-actions';
+import {HelmetProvider} from 'react-helmet-async';
 
 function App() {
   const isAuthorized = useAppSelector(getIsAuthorized);
@@ -30,59 +31,61 @@ function App() {
   }, [isAuthorized, dispatch]);
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route
-          index
-          element={<MainPage /> }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={
-            <PrivateRoute
-              restrictedFor={AuthorizationStatus.Auth}
-              redirectedTo={AppRoute.Root}
-            >
-              <LoginPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.MyList}
-          element={
-            <PrivateRoute
-              restrictedFor={AuthorizationStatus.NoAuth}
-              redirectedTo={AppRoute.Login}
-            >
-              <MyListPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Film}
-          element={<FilmPage />}
-        />
-        <Route
-          path={AppRoute.AddReview}
-          element={
-            <PrivateRoute
-              restrictedFor={AuthorizationStatus.NoAuth}
-              redirectedTo={AppRoute.Login}
-            >
-              <AddReviewPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Player}
-          element={<PlayerPage />}
-        />
-        <Route
-          path="*"
-          element={<NotFoundPage />}
-        />
-      </Routes>
-    </HistoryRouter>
+    <HelmetProvider>
+      <HistoryRouter history={browserHistory}>
+        <Routes>
+          <Route
+            index
+            element={<MainPage/>}
+          />
+          <Route
+            path={AppRoute.Login}
+            element={
+              <PrivateRoute
+                restrictedFor={AuthorizationStatus.Auth}
+                redirectedTo={AppRoute.Root}
+              >
+                <LoginPage/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.MyList}
+            element={
+              <PrivateRoute
+                restrictedFor={AuthorizationStatus.NoAuth}
+                redirectedTo={AppRoute.Login}
+              >
+                <MyListPage/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Film}
+            element={<FilmPage/>}
+          />
+          <Route
+            path={AppRoute.AddReview}
+            element={
+              <PrivateRoute
+                restrictedFor={AuthorizationStatus.NoAuth}
+                redirectedTo={AppRoute.Login}
+              >
+                <AddReviewPage/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Player}
+            element={<PlayerPage/>}
+          />
+          <Route
+            path="*"
+            element={<NotFoundPage/>}
+          />
+        </Routes>
+      </HistoryRouter>
+    </HelmetProvider>
   );
 }
 

@@ -3,10 +3,12 @@ import {useAppDispatch} from '../../hooks/use-app-dispatch';
 import {useAppSelector} from '../../hooks/use-app-selector';
 import {getFilm, getIsFilmLoading} from '../../store/film/selectors';
 import Spinner from '../../components/spinner/spinner';
-import {useEffect} from 'react';
+import {Fragment, useEffect} from 'react';
 import {fetchFilm} from '../../store/film/api-actions';
 import Player from '../../components/player/player';
 import ErrorMessage from '../../components/error-message/error-message';
+import {PageTitle} from '../../const';
+import {Helmet} from 'react-helmet-async';
 
 function PlayerPage() {
   const film = useAppSelector(getFilm);
@@ -21,15 +23,20 @@ function PlayerPage() {
   }, [id, dispatch]);
 
   if (!film) {
-    return <ErrorMessage />;
+    return <ErrorMessage/>;
   }
 
   if (isFilmLoading) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   return (
-    <Player film={film} />
+    <Fragment>
+      <Helmet>
+        <title>{PageTitle.Player}</title>
+      </Helmet>
+      <Player film={film}/>
+    </Fragment>
   );
 }
 

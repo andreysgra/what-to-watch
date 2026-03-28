@@ -31,7 +31,19 @@ export enum SuccessMessage {
 }
 
 export enum ErrorMessage {
+  Email = 'Please enter a valid email address',
+  Password = 'The password must contain at least one letter and one number',
   ReviewSubmit = 'An error occurred, please try sending again'
+}
+
+export enum PageTitle {
+  AddReview = 'WTW – add review',
+  Film = 'WTW – Film',
+  LogIn = 'WTW – Authorization',
+  Main = 'WTW',
+  MyList = 'WTW – My list',
+  NotFound = 'WTW – 404',
+  Player = 'WTW – Player'
 }
 
 export const FilmRatingMinThreshold = {
@@ -62,4 +74,6 @@ export const REVIEW_COLUMNS_COUNT = 2;
 
 export const ALL_GENRES = 'All genres';
 
-export const VALID_PASSWORD_REGEXP = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+export const VALID_EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+export const VALID_PASSWORD_PATTERN = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
