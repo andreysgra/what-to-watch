@@ -37,7 +37,7 @@ export enum ErrorMessage {
 }
 
 export enum PageTitle {
-  AddReview = 'WTW: add review',
+  AddReview = 'WTW – add review',
   Film = 'WTW – Film',
   LogIn = 'WTW – Authorization',
   Main = 'WTW',
