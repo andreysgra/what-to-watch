@@ -36,6 +36,16 @@ export enum ErrorMessage {
   ReviewSubmit = 'An error occurred, please try sending again'
 }
 
+export enum PageTitle {
+  AddReview = 'WTW: add review',
+  Film = 'WTW – Film',
+  LogIn = 'WTW – Authorization',
+  Main = 'WTW',
+  MyList = 'WTW – My list',
+  NotFound = 'WTW – 404',
+  Player = 'WTW – Player'
+}
+
 export const FilmRatingMinThreshold = {
   [FilmRatingLevel.Normal]: 3,
   [FilmRatingLevel.Good]: 5,
