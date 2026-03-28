@@ -1,10 +1,14 @@
 import {useAppDispatch} from '../../hooks/use-app-dispatch';
-import {FormEvent, useRef} from 'react';
-import {VALID_PASSWORD_REGEXP} from '../../const';
+import {FormEvent, useRef, useState} from 'react';
+import {ErrorMessage, VALID_EMAIL_PATTERN, VALID_PASSWORD_PATTERN} from '../../const';
 import {loginUser} from '../../store/user/api-actions';
+import classNames from 'classnames';
 
 function LoginForm() {
   const dispatch = useAppDispatch();
+
+  const [isValueValid, setIsValueValid] = useState({email: true, password: true});
+  const [errorMessage, setErrorMessage] = useState('');
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -12,24 +16,45 @@ function LoginForm() {
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (!passwordRef.current?.value.match(VALID_PASSWORD_REGEXP)) {
+    if (!emailRef.current?.value.match(VALID_EMAIL_PATTERN)) {
+      setErrorMessage(ErrorMessage.Email);
+      setIsValueValid({email: false, password: true});
+
       return;
     }
 
-    if (emailRef.current !== null) {
-      dispatch(loginUser(
-        {
-          email: emailRef.current.value,
-          password: passwordRef.current.value
-        }
-      ));
+    if (!passwordRef.current?.value.match(VALID_PASSWORD_PATTERN)) {
+      setErrorMessage(ErrorMessage.Password);
+      setIsValueValid({email: true, password: false});
+
+      return;
     }
+
+    dispatch(loginUser(
+      {
+        email: emailRef.current.value,
+        password: passwordRef.current.value
+      }
+    ));
+  };
+
+  const handleFormChange = ()=> {
+    setIsValueValid({email: true, password: true});
   };
 
   return (
-    <form action="#" className="sign-in__form" method="post" onSubmit={handleFormSubmit}>
+    <form
+      className="sign-in__form"
+      method="post"
+      onSubmit={handleFormSubmit}
+      onChange={handleFormChange}
+      noValidate
+    >
+      <div className="sign-in__message">
+        <p>{isValueValid.email && isValueValid.password ? '' : errorMessage}</p>
+      </div>
       <div className="sign-in__fields">
-        <div className="sign-in__field">
+        <div className={classNames('sign-in__field', {'sign-in__field--error': !isValueValid.email})}>
           <input
             className="sign-in__input"
             type="email"
@@ -46,7 +71,7 @@ function LoginForm() {
             Email address
           </label>
         </div>
-        <div className="sign-in__field">
+        <div className={classNames('sign-in__field', {'sign-in__field--error': !isValueValid.password})}>
           <input
             className="sign-in__input"
             type="password"
